@@ -1,0 +1,721 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9090",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/users/{id}": {
+      "get": {
+        "tags": ["user-controller"],
+        "operationId": "findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["user-controller"],
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["user-controller"],
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidencias/{id}": {
+      "get": {
+        "tags": ["incidencias-controller"],
+        "operationId": "findById_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["incidencias-controller"],
+        "operationId": "update_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IncidenciasDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["incidencias-controller"],
+        "operationId": "delete_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/estados/{id}": {
+      "put": {
+        "tags": ["estados-controller"],
+        "operationId": "updateStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EstadosDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["estados-controller"],
+        "operationId": "delete_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": ["user-controller"],
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidencias": {
+      "post": {
+        "tags": ["incidencias-controller"],
+        "operationId": "save",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/IncidenciasDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidencias/image/{id}": {
+      "get": {
+        "tags": ["incidencias-controller"],
+        "operationId": "getImage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "type": "string", "format": "byte" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["incidencias-controller"],
+        "operationId": "uploadImage",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "incedenciasImage": { "type": "string", "format": "binary" }
+                },
+                "required": ["incedenciasImage"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/estados": {
+      "post": {
+        "tags": ["estados-controller"],
+        "operationId": "save_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/EstadosDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories": {
+      "post": {
+        "tags": ["category-controller"],
+        "operationId": "save_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CategoriesDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": ["auth-controller"],
+        "operationId": "registerUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UserDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["auth-controller"],
+        "operationId": "loginUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginDto" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/email/{email}": {
+      "get": {
+        "tags": ["user-controller"],
+        "operationId": "getUserByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/bySubName/{subName}": {
+      "get": {
+        "tags": ["user-controller"],
+        "operationId": "findAllBySubName",
+        "parameters": [
+          {
+            "name": "subName",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/UserDto" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/allUser": {
+      "get": {
+        "tags": ["user-controller"],
+        "operationId": "getAllUsersWithPagination",
+        "parameters": [
+          {
+            "name": "sortedBy",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "nombre" }
+          },
+          {
+            "name": "sortedDir",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "asc" }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 1 }
+          },
+          {
+            "name": "pageNo",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/PageableResponseUserDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidencias/email/{email}": {
+      "get": {
+        "tags": ["incidencias-controller"],
+        "operationId": "getAllByEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/incidencias/allIncidencias": {
+      "get": {
+        "tags": ["incidencias-controller"],
+        "operationId": "getAllIncidenciasWithPagination",
+        "parameters": [
+          {
+            "name": "sortedBy",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "titulo" }
+          },
+          {
+            "name": "sortedDir",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "asc" }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 1 }
+          },
+          {
+            "name": "pageNo",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "format": "int32", "default": 0 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/PageableResponseIncidenciasDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": ["category-controller"],
+        "operationId": "findById_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["category-controller"],
+        "operationId": "delete_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": { "$ref": "#/components/schemas/ApiResponseMessage" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserDto": {
+        "type": "object",
+        "properties": {
+          "nombre": { "type": "string" },
+          "email": { "type": "string" },
+          "dni": { "type": "string", "pattern": "\\d{8}[A-Za-z]" },
+          "role": { "type": "string", "enum": ["ROLE_CIUDADANO", "ROLE_ADMIN"] },
+          "password": { "type": "string", "minLength": 1 }
+        },
+        "required": ["dni", "email", "nombre", "password", "role"]
+      },
+      "ApiResponseMessage": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" },
+          "status": { "type": "string" },
+          "success": { "type": "boolean" },
+          "data": {}
+        }
+      },
+      "IncidenciasDto": {
+        "type": "object",
+        "properties": {
+          "titulo": { "type": "string" },
+          "descripcion": { "type": "string" },
+          "latitud": { "type": "number", "format": "double" },
+          "longitud": { "type": "number", "format": "double" },
+          "foto": { "type": "string", "format": "byte" },
+          "fecha_creacion": { "type": "string", "format": "date-time" },
+          "fecha_resolucion": { "type": "string", "format": "date-time" },
+          "foto_resolucion": { "type": "string" },
+          "comentario_admin": { "type": "string" },
+          "id_categoria": { "type": "integer", "format": "int32" },
+          "id_usuario": { "type": "integer", "format": "int32" },
+          "id_estado": { "type": "integer", "format": "int32" }
+        },
+        "required": ["descripcion", "titulo"]
+      },
+      "EstadosDto": {
+        "type": "object",
+        "properties": {
+          "nombre_estado": { "type": "string" }
+        },
+        "required": ["nombre_estado"]
+      },
+      "CategoriesDto": {
+        "type": "object",
+        "properties": {
+          "nombreCategoria": { "type": "string" }
+        },
+        "required": ["nombreCategoria"]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string", "minLength": 1 }
+        },
+        "required": ["email", "password"]
+      },
+      "PageableResponseUserDto": {
+        "type": "object",
+        "properties": {
+          "pageNo": { "type": "integer", "format": "int32" },
+          "pageSize": { "type": "integer", "format": "int32" },
+          "totalPages": { "type": "integer", "format": "int32" },
+          "lastPage": { "type": "boolean" },
+          "totalElements": { "type": "integer", "format": "int32" },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/UserDto" }
+          }
+        }
+      },
+      "PageableResponseIncidenciasDto": {
+        "type": "object",
+        "properties": {
+          "pageNo": { "type": "integer", "format": "int32" },
+          "pageSize": { "type": "integer", "format": "int32" },
+          "totalPages": { "type": "integer", "format": "int32" },
+          "lastPage": { "type": "boolean" },
+          "totalElements": { "type": "integer", "format": "int32" },
+          "data": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/IncidenciasDto" }
+          }
+        }
+      }
+    }
+  }
+}

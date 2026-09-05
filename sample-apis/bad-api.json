@@ -1,0 +1,86 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Bad Sample API",
+    "description": "Test fixture with intentionally problematic REST endpoints"
+  },
+  "paths": {
+    "/getUsers/": {
+      "get": {
+        "summary": "Get all users",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "type": "object" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Success" }
+        }
+      }
+    },
+    "/CreateOrder": {
+      "post": {
+        "summary": "Create an order",
+        "responses": {
+          "200": { "description": "OK" }
+        }
+      }
+    },
+    "/user/{id}": {
+      "get": {
+        "operationId": "fetchUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Success" }
+        }
+      }
+    },
+    "/v2/orders": {
+      "get": {
+        "operationId": "listOrders",
+        "responses": {
+          "200": { "description": "Success" }
+        }
+      }
+    },
+    "/order_items/{itemId}.json": {
+      "get": {
+        "operationId": "getOrderItem",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Success" }
+        }
+      },
+      "delete": {
+        "operationId": "deleteOrderItem",
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Deleted" }
+        }
+      }
+    }
+  }
+}
