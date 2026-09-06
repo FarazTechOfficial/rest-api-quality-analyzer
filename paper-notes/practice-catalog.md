@@ -1,6 +1,16 @@
-# Practice Catalog — Reconstructed from Petrillo et al.
+# Practice Catalog — Reconstructed from Reference Works
 
-Reconstructed from: Kotstein & Bogner (2021) which reproduces Massé's 82 rules, the basis for Petrillo et al.'s 73 practices in "Are REST APIs for Cloud Computing Well-Designed?" (CLOSER 2018).
+Reconstructed from: Kotstein & Bogner (2021) which reproduces Massé's 82 rules, the basis for Petrillo et al.'s 73 practices in "Are REST APIs for Cloud Computing Well-Designed? An Exploratory Study" (**ICSOC 2016, LNCS vol 9936, pp. 157-170**; not CLOSER 2018 — corrected 2026-09-06).
+
+> **Relationship to the paper.** The paper (see `paper-catalog.md` for the
+> authoritative transcription) catalogues exactly **73 practices** in 5
+> categories (URI 20, Request methods 8, Error handling 16, HTTP headers 10,
+> Others 19). THIS file is a **broader reconstruction (83 rows)** drawing on
+> the wider rule references; its P-x.y category scheme and rows do NOT
+> correspond 1:1 to the paper's own tables. Treat every claim here as
+> reconstruction metadata, never as a paper statistic. Automatable vs manual
+> is this reconstruction's heuristic; **the paper does not provide sufficient
+> information to verify an automatable split**.
 
 ---
 
@@ -124,9 +134,10 @@ Reconstructed from: Kotstein & Bogner (2021) which reproduces Massé's 82 rules,
 
 ---
 
-## Summary
+## Summary (reconstruction statistics only — NOT the paper's figures)
 
-- **Total practices**: 73
-- **Automatable by prototype**: 35
-- **Manual review required**: 38
-- **Prototype covers**: 18 of 35 automatable practices (51%)
+- **Total rows in this reconstruction**: 83
+- **Flagged automatable by this reconstruction's heuristic**: 40
+- **Flagged manual review required**: 43
+- **Implemented rules**: 18 (11 map to paper-practice IDs, 7 are OpenAPI-specific; see `docs/practice-traceability.md` and `docs/research-replication.md`)
+- The paper itself reports **73 practices** (URI 20, Request methods 8, Error handling 16, HTTP headers 10, Others 19) and does **not** split them into automatable vs. manual — see `paper-catalog.md`.

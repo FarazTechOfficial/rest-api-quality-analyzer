@@ -165,7 +165,7 @@ Invoke-RestMethod -Uri "http://localhost:8082/api/reports/{analysisId}/violation
     {
       "ruleId": "REST-011",
       "ruleName": "No file extension in URI",
-      "practiceId": "P-1.5",
+      "practiceId": "U-6",
       "endpoint": "/order_items/{itemId}.json",
       "method": "GET",
       "status": "FAILED",
