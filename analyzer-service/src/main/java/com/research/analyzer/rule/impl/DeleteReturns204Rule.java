@@ -22,7 +22,7 @@ public class DeleteReturns204Rule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-5.4";
+        return "E-5";
     }
 
     @Override

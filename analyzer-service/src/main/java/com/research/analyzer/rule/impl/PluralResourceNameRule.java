@@ -21,7 +21,7 @@ public class PluralResourceNameRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-1.2";
+        return "U-9";
     }
 
     @Override

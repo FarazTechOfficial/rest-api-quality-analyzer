@@ -21,7 +21,7 @@ public class LowercasePathRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-1.3";
+        return "U-5";
     }
 
     @Override

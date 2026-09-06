@@ -71,7 +71,7 @@ export default function Dashboard() {
           </div>
           <div className="card stat-card">
             <div className="stat-value">{stats.implementedPractices}</div>
-            <div className="stat-label">Practices automated</div>
+            <div className="stat-label">Practices analyzed</div>
           </div>
           <div className="card stat-card">
             <div className="stat-value">{stats.analyzedApis}</div>

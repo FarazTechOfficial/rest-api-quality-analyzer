@@ -21,7 +21,7 @@ public class HttpMethodSemanticsRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-2.6";
+        return "RM-2";
     }
 
     @Override

@@ -21,7 +21,7 @@ public class VersionInUriRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-3.3";
+        return "U-7";
     }
 
     @Override

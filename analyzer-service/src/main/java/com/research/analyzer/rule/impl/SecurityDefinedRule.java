@@ -21,7 +21,7 @@ public class SecurityDefinedRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-7.2";
+        return "O-10";
     }
 
     @Override

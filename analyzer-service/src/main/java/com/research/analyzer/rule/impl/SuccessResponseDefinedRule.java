@@ -22,7 +22,7 @@ public class SuccessResponseDefinedRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-5.1";
+        return "OPENAPI-05";
     }
 
     @Override

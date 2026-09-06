@@ -29,7 +29,7 @@ public class ResourceOrientedUriRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-1.1";
+        return "U-12";
     }
 
     @Override

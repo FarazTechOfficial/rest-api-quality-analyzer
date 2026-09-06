@@ -21,7 +21,7 @@ public class ApiVersionPresentRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-3.1";
+        return "OPENAPI-06";
     }
 
     @Override

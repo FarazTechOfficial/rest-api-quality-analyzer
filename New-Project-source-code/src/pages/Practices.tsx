@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import {
-  AUTOMATABLE_PRACTICES_COUNT,
-  IMPLEMENTED_PRACTICES_COUNT,
   IMPLEMENTED_RULES_COUNT,
+  PAPER_PRACTICES_EVALUATED_COUNT,
+  PAPER_PRACTICE_COUNT,
   PRACTICES,
   RESEARCH_CATALOG_COUNT,
 } from "../data/practicesCatalog";
@@ -27,26 +27,27 @@ export default function Practices() {
       <div className="card">
         <h1>REST API Design Practices</h1>
         <p className="hero-desc">
-          Research-based design practices reconstructed from the reference
-          works. The source paper reports 73 practices (35 automatable); this
-          extracted catalog lists 83 rows because the reconstruction draws on
-          the broader rule references and is not a one-to-one copy of the
-          paper's list. The counts below therefore describe this catalog, not
-          the paper's figures. Only the practices with an implemented rule are
-          actually evaluated by the analyzer.
+          The source paper — Petrillo et al., ICSOC 2016 — catalogues exactly{" "}
+          {PAPER_PRACTICE_COUNT} REST API design practices across 5 categories
+          (see paper-notes/paper-catalog.md). This page lists a broader{" "}
+          {RESEARCH_CATALOG_COUNT}-row reconstruction drawn from the reference
+          works; its P-x.y IDs are this project's labels and do not equal the
+          paper's practice IDs. The analyzer implements{" "}
+          {IMPLEMENTED_RULES_COUNT} rules, {PAPER_PRACTICES_EVALUATED_COUNT} of
+          which map directly to the paper's practices.
         </p>
         <div className="stats stats-four">
+          <div className="card stat-card">
+            <div className="stat-value">{PAPER_PRACTICE_COUNT}</div>
+            <div className="stat-label">Paper practices</div>
+          </div>
           <div className="card stat-card">
             <div className="stat-value">{RESEARCH_CATALOG_COUNT}</div>
             <div className="stat-label">Catalog rows</div>
           </div>
           <div className="card stat-card">
-            <div className="stat-value">{AUTOMATABLE_PRACTICES_COUNT}</div>
-            <div className="stat-label">Automatable rows</div>
-          </div>
-          <div className="card stat-card">
-            <div className="stat-value">{IMPLEMENTED_PRACTICES_COUNT}</div>
-            <div className="stat-label">Practices automated</div>
+            <div className="stat-value">{PAPER_PRACTICES_EVALUATED_COUNT}</div>
+            <div className="stat-label">Paper practices automated</div>
           </div>
           <div className="card stat-card">
             <div className="stat-value">{IMPLEMENTED_RULES_COUNT}</div>

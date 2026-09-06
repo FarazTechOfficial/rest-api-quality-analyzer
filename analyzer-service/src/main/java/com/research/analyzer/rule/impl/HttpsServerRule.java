@@ -21,7 +21,7 @@ public class HttpsServerRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-7.1";
+        return "O-14";
     }
 
     @Override

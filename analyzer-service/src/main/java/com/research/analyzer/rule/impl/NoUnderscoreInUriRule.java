@@ -21,7 +21,7 @@ public class NoUnderscoreInUriRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-1.6";
+        return "U-4";
     }
 
     @Override

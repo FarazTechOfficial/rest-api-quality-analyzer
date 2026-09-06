@@ -21,7 +21,7 @@ public class NoFileExtensionRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-1.5";
+        return "U-6";
     }
 
     @Override

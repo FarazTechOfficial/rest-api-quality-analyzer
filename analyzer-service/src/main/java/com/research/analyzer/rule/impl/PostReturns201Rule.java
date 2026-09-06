@@ -22,7 +22,7 @@ public class PostReturns201Rule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-5.2";
+        return "E-3";
     }
 
     @Override

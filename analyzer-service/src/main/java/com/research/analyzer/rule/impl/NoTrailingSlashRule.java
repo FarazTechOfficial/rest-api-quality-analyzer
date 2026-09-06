@@ -21,7 +21,7 @@ public class NoTrailingSlashRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-1.4";
+        return "U-2";
     }
 
     @Override

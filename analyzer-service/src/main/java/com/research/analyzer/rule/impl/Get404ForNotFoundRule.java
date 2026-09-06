@@ -22,7 +22,7 @@ public class Get404ForNotFoundRule implements RestApiRule {
 
     @Override
     public String getPracticeId() {
-        return "P-5.10";
+        return "E-11";
     }
 
     @Override

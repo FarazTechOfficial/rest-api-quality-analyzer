@@ -1,43 +1,47 @@
 // ============================================================================
 // Research practice catalog — static research metadata.
-// Reconstructed from paper-notes/practice-catalog.md. The source paper reports
-// 73 practices (35 automatable); the extraction from the reference works yields
-// 83 rows (40 automatable) — the reconstruction is broader than a 1:1 copy of
-// the paper's list, and NOT all entries can be tied back to the paper's exact
-// 73. The counts in this file therefore describe the *extracted catalog*, not
-// the paper's own figures.
 //
-// IMPORTANT: this is the *research catalog*, not a claim about the analyzer.
-// Each row's `implemented` flag is derived from the rule→practice mapping in
-// the actual Analyzer Service source (rule/impl/*.java), using the practice
-// the rule most directly implements. The analyzer currently implements 18
-// rules (REST-001..REST-018), of which 16 cover paper practice IDs. REST-005
-// and REST-010 implement additional OpenAPI-specific checks (OPENAPI-01/02)
-// that have no paper-practice counterpart.
+// The source paper (Petrillo et al., ICSOC 2016, LNCS 9936) catalogues
+// exactly 73 REST API design practices in 5 categories (see
+// paper-notes/paper-catalog.md for the authoritative transcription).
+//
+// This file contains a BROADER RECONSTRUCTION (83 rows) derived from the
+// reference works in paper-notes/practice-catalog.md. The reconstruction
+// is NOT a 1:1 copy of the paper's 73 practices; the P-x.y practice IDs
+// used here are THIS project's own labels for the reconstructed rows and
+// must NOT be confused with the paper's practice IDs.
+//
+// Each row's `implemented` flag means: an implemented rule in the Analyzer
+// Service evaluates this reconstructed concept. The Analyzer implements 18
+// rules (REST-001..REST-018), of which 13 map to paper-practice IDs
+// (U-/RM-/E-/H-/O-) and 5 are OpenAPI-spec-specific checks
+// (OPENAPI-01/02/04/05/06). See paper-notes/paper-catalog.md for the
+// authoritative rule→practice mapping.
 // ============================================================================
 
 import type { Practice } from "../types";
 
-// practiceId -> ruleId. The rule is assigned to the practice it most directly
-// implements, verified against the catalog rows (paper-notes/practice-catalog.md)
-// and the Analyzer Service rule implementations.
+// practiceId -> ruleId.  Each entry means: the reconstructed catalog row
+// (identified by its P-x.y id) is conceptually evaluated by the named rule.
+// This is NOT a claim that the paper practice is reproduced; it means the
+// analyzer checks the same design concern that the row describes.
+// Added: 2026-09-06 — updated from 16 to 14 rows to remove P-3.3 and P-5.1
+// which do not map cleanly to any single implemented rule.
 const COVERED_BY_RULE: Record<string, string> = {
-  "P-1.1": "REST-001",
-  "P-1.2": "REST-002",
-  "P-1.3": "REST-004",
-  "P-1.4": "REST-008",
-  "P-1.5": "REST-011",
-  "P-1.6": "REST-012",
-  "P-2.6": "REST-003",
-  "P-3.1": "REST-009",
-  "P-3.3": "REST-017",
-  "P-5.1": "REST-007",
-  "P-5.2": "REST-013",
-  "P-5.4": "REST-014",
-  "P-5.10": "REST-015",
-  "P-6.4": "REST-006",
-  "P-7.1": "REST-016",
-  "P-7.2": "REST-018",
+  "P-1.1": "REST-001",   // verbs in URIs (conceptual)
+  "P-1.2": "REST-002",   // plural collection names (conceptual)
+  "P-1.3": "REST-004",   // lowercase path segments (conceptual)
+  "P-1.4": "REST-008",   // no trailing slash (conceptual)
+  "P-1.5": "REST-011",   // no file extension (conceptual)
+  "P-1.6": "REST-012",   // no underscore (conceptual)
+  "P-2.6": "REST-003",   // GET/DELETE must not carry a body (conceptual)
+  "P-3.1": "REST-009",   // API version must be defined (conceptual)
+  "P-5.2": "REST-013",   // POST returns 201 (conceptual)
+  "P-5.4": "REST-014",   // DELETE returns 204 when body empty (conceptual)
+  "P-5.10": "REST-015",  // 404 for not found (conceptual)
+  "P-6.4": "REST-006",   // error responses documented (conceptual)
+  "P-7.1": "REST-016",   // HTTPS (conceptual)
+  "P-7.2": "REST-018",   // security scheme defined (conceptual)
 };
 
 type Row = [
@@ -183,19 +187,43 @@ export const PRACTICES: Practice[] = CATEGORIES.flatMap((category) =>
   })
 );
 
+// Number of practices in the source paper (Petrillo et al., ICSOC 2016).
+export const PAPER_PRACTICE_COUNT = 73;
+
+// Number of the paper's 73 practices that our 18 rules map to directly.
+// 13 paper practices (U-2, U-4, U-5, U-6, U-7, U-9, U-12, RM-2, E-3, E-5,
+// E-11, O-10, O-14) + 5 OpenAPI-specific rules (OPENAPI-01/02/04/05/06).
+// Source: paper-notes/paper-catalog.md rule→practice mapping.
+export const PAPER_PRACTICES_EVALUATED_COUNT = 13;
+
+// Number of rows in this reconstructed catalog (not the paper's count).
 export const RESEARCH_CATALOG_COUNT: number = PRACTICES.length;
+
+// Number of reconstructed catalog rows flagged automatable (reconstruction
+// heuristic; this is NOT a figure from the paper).
 export const AUTOMATABLE_PRACTICES_COUNT: number = PRACTICES.filter(
   (p) => p.automatable
 ).length;
+
+// Number of reconstructed catalog rows with a rule covering the concept.
 export const IMPLEMENTED_PRACTICES_COUNT: number = PRACTICES.filter(
   (p) => p.implemented
 ).length;
 
-// Number of rules implemented in the Analyzer Service (REST-001..REST-018).
+// Number of distinct rules implemented in the Analyzer Service.
 export const IMPLEMENTED_RULES_COUNT = 18;
 
 // Practice ID -> category name, used to label backend rule results.
+// Handles both the reconstruction P-x.y ids (used in the catalog table) and
+// the new paper/OPENAPI ids (U-*, RM-*, E-*, H-*, O-*, OPENAPI-*) returned
+// by the Analyzer Service after the 2026-09-06 practiceId fix.
 const CATEGORY_BY_PREFIX: Record<string, string> = {
+  U: "URI Design",
+  RM: "Request Methods",
+  E: "Error Handling",
+  H: "HTTP Headers",
+  O: "Others",
+  OPENAPI: "OpenAPI conventions",
   "P-1": "URI Design",
   "P-2": "HTTP Methods",
   "P-3": "Metadata & Versioning",
@@ -203,7 +231,6 @@ const CATEGORY_BY_PREFIX: Record<string, string> = {
   "P-5": "Status Codes",
   "P-6": "Error Handling",
   "P-7": "Security & Documentation",
-  OPENAPI: "OpenAPI conventions",
 };
 
 export function categoryForPracticeId(practiceId: string): string {
@@ -212,6 +239,8 @@ export function categoryForPracticeId(practiceId: string): string {
   if (fromCatalog) return fromCatalog.category;
   const prefix = practiceId.startsWith("OPENAPI")
     ? "OPENAPI"
-    : practiceId.slice(0, 3);
+    : practiceId.startsWith("RM")
+      ? "RM"
+      : practiceId.slice(0, 1);
   return CATEGORY_BY_PREFIX[prefix] ?? "";
 }
