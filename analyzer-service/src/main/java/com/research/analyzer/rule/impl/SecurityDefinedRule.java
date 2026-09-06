@@ -47,4 +47,9 @@ public class SecurityDefinedRule implements RestApiRule {
                 null
         );
     }
+
+    @Override
+    public boolean isSpecLevel() {
+        return true;
+    }
 }

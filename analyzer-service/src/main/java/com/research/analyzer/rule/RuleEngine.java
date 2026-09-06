@@ -20,8 +20,18 @@ public class RuleEngine {
     public List<RuleResultDto> evaluateAll(ApiSpecification specification) {
         List<RuleResultDto> allResults = new ArrayList<>();
 
-        for (ApiEndpoint endpoint : specification.getEndpoints()) {
-            for (RestApiRule rule : rules) {
+        for (RestApiRule rule : rules) {
+            if (rule.isSpecLevel()) {
+                // Spec-level rules check API-wide properties; evaluate once so
+                // their identical per-endpoint results do not skew the score.
+                if (!specification.getEndpoints().isEmpty()) {
+                    ApiEndpoint firstEndpoint = specification.getEndpoints().get(0);
+                    allResults.add(rule.evaluate(firstEndpoint, specification));
+                }
+                continue;
+            }
+
+            for (ApiEndpoint endpoint : specification.getEndpoints()) {
                 RuleResultDto result = rule.evaluate(endpoint, specification);
                 allResults.add(result);
             }

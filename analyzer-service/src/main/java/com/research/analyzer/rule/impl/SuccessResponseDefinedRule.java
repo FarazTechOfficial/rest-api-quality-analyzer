@@ -17,7 +17,7 @@ public class SuccessResponseDefinedRule implements RestApiRule {
 
     @Override
     public String getRuleName() {
-        return "Success response defined";
+        return "At least one success response documented";
     }
 
     @Override
@@ -27,7 +27,9 @@ public class SuccessResponseDefinedRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "Operations should document at least one 2xx success response.";
+        return "Operations should document at least one 2xx success response. "
+                + "This checks presence of a 2xx response only; it does NOT verify "
+                + "correctness of the success status semantics.";
     }
 
     @Override

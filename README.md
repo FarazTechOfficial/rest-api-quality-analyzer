@@ -8,7 +8,7 @@ This prototype is intended to support an empirical investigation of REST API des
 
 REST APIs are widely used in cloud computing, but their design quality varies. This tool accepts OpenAPI specifications, evaluates them against a configurable set of design rules, and produces structured analysis reports for research experiments.
 
-Inspired by the exploratory study *"Are REST APIs for Cloud Computing Well-Designed? An Exploratory Study"* (Petrillo et al., ICSOC 2016). The rule engine implements a subset of those practices (13 of the paper's 73, plus 5 OpenAPI-spec-specific checks); the mapping between each rule and its practice is documented in `docs/practice-traceability.md`, and the full replication audit lives in `docs/research-replication.md`.
+Inspired by the exploratory study *"Are REST APIs for Cloud Computing Well-Designed? An Exploratory Study"* (Petrillo et al., ICSOC 2016). The rule engine implements a subset of those practices (16 of the paper's 73, plus 5 OpenAPI-spec-specific checks); the mapping between each rule and its practice is documented in `docs/practice-traceability.md`, and the full replication audit lives in `docs/research-replication.md`.
 
 ## Architecture
 
@@ -19,7 +19,7 @@ Browser (React + Vite, 5173)
 Analyzer Service (8081)  ──HTTP──►  Report Service (8082)  ──►  MySQL
       │
       ├── OpenAPI Parser (swagger-parser)
-      ├── Rule Engine (18 rules -> 13 paper practices + 5 OpenAPI checks)
+      ├── Rule Engine (21 rules -> 16 paper practices + 5 OpenAPI checks)
       └── Scoring
 ```
 
@@ -116,12 +116,12 @@ Sample fixtures: `sample-apis/good-api.json`, `sample-apis/bad-api.json`, `sampl
 
 `score = (passedRules / totalRules) × 100`
 
-Each endpoint is checked against all applicable rules; each rule maps to exactly one practice ID from the paper catalog (`U-`/`RM-`/`E-`/`H-`/`O-`) or an implementation-specific `OPENAPI-` ID. Reports are saved automatically after every analysis.
+Each endpoint is checked against all applicable per-endpoint rules; API-wide (spec-level) rules are evaluated once per specification so their identical per-endpoint results do not inflate the denominator. Each rule maps to exactly one practice ID from the paper catalog (`U-`/`RM-`/`E-`/`H-`/`O-`) or an implementation-specific `OPENAPI-` ID. Reports are saved automatically after every analysis.
 
 ## Limitations
 
 - The source paper (Petrillo et al., ICSOC 2016) catalogues exactly 73 practices. `paper-notes/practice-catalog.md` is a broader reconstruction (83 rows) drawn from additional reference works — it is not a 1:1 copy of the paper's list.
-- 18 rules cover 13 of the paper's 73 practices directly, plus 5 OpenAPI-spec-specific checks (REST-001..018, see `docs/practice-traceability.md`). The 13 paper practices are an *adaptation*: the paper assessed cloud APIs by manual documentation analysis, this tool infers the practices from an OpenAPI document.
+- 21 rules cover 16 of the paper's 73 practices directly, plus 5 OpenAPI-spec-specific checks (REST-001..021, see `docs/practice-traceability.md`). The 16 paper practices are an *adaptation*: the paper assessed cloud APIs by manual documentation analysis, this tool infers the practices from an OpenAPI document.
 - OpenAPI structure analysis only, not runtime behavior.
 - The paper studied exactly three APIs (Google Cloud Platform, OpenStack, OCCI 1.2) manually; this project's sample fixtures are not a reproduction of that study. See `docs/research-replication.md` and `results/`.
 - Research conclusions are your responsibility.

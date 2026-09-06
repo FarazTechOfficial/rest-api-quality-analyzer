@@ -41,7 +41,15 @@ public class HttpsServerRule implements RestApiRule {
         }
 
         for (String url : specification.getServerUrls()) {
-            if (!url.toLowerCase().startsWith("https://")) {
+            String lower = url.toLowerCase();
+            int schemeEnd = lower.indexOf("://");
+            if (schemeEnd <= 0) {
+                // Relative server URL (e.g. "/v1"): no scheme is declared, so
+                // transport security cannot be evaluated; do not flag it.
+                continue;
+            }
+            String scheme = lower.substring(0, schemeEnd);
+            if (!"https".equals(scheme)) {
                 return new RuleResultDto(
                         getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
                         false,
@@ -57,5 +65,10 @@ public class HttpsServerRule implements RestApiRule {
                 "All server URLs use HTTPS.",
                 null
         );
+    }
+
+    @Override
+    public boolean isSpecLevel() {
+        return true;
     }
 }

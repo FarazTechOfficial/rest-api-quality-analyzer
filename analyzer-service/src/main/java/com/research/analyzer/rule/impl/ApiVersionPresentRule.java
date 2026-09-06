@@ -49,4 +49,9 @@ public class ApiVersionPresentRule implements RestApiRule {
                 null
         );
     }
+
+    @Override
+    public boolean isSpecLevel() {
+        return true;
+    }
 }

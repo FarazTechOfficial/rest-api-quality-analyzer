@@ -12,8 +12,8 @@
 // must NOT be confused with the paper's practice IDs.
 //
 // Each row's `implemented` flag means: an implemented rule in the Analyzer
-// Service evaluates this reconstructed concept. The Analyzer implements 18
-// rules (REST-001..REST-018), of which 13 map to paper-practice IDs
+// Service evaluates this reconstructed concept. The Analyzer implements 21
+// rules (REST-001..REST-021), of which 16 map to paper-practice IDs
 // (U-/RM-/E-/H-/O-) and 5 are OpenAPI-spec-specific checks
 // (OPENAPI-01/02/04/05/06). See paper-notes/paper-catalog.md for the
 // authoritative rule→practice mapping.
@@ -25,8 +25,8 @@ import type { Practice } from "../types";
 // (identified by its P-x.y id) is conceptually evaluated by the named rule.
 // This is NOT a claim that the paper practice is reproduced; it means the
 // analyzer checks the same design concern that the row describes.
-// Added: 2026-09-06 — updated from 16 to 14 rows to remove P-3.3 and P-5.1
-// which do not map cleanly to any single implemented rule.
+// Added: 2026-09-06 — recovery of P-2.7 (already implemented via REST-003);
+//                      2026-09-06 Priority 1 added P-4.1/P-3.12/P-4.7.
 const COVERED_BY_RULE: Record<string, string> = {
   "P-1.1": "REST-001",   // verbs in URIs (conceptual)
   "P-1.2": "REST-002",   // plural collection names (conceptual)
@@ -34,8 +34,12 @@ const COVERED_BY_RULE: Record<string, string> = {
   "P-1.4": "REST-008",   // no trailing slash (conceptual)
   "P-1.5": "REST-011",   // no file extension (conceptual)
   "P-1.6": "REST-012",   // no underscore (conceptual)
-  "P-2.6": "REST-003",   // GET/DELETE must not carry a body (conceptual)
+  "P-2.6": "REST-003",   // GET must not carry a body (RM-2)
+  "P-2.7": "REST-003",   // DELETE must not carry a body (implementation check)
   "P-3.1": "REST-009",   // API version must be defined (conceptual)
+  "P-3.12": "REST-020",  // pagination mechanism via query params (O-13)
+  "P-4.1": "REST-019",   // JSON representations (O-8)
+  "P-4.7": "REST-021",   // proper Content-Type headers on GET responses (H-2)
   "P-5.2": "REST-013",   // POST returns 201 (conceptual)
   "P-5.4": "REST-014",   // DELETE returns 204 when body empty (conceptual)
   "P-5.10": "REST-015",  // 404 for not found (conceptual)
@@ -190,11 +194,12 @@ export const PRACTICES: Practice[] = CATEGORIES.flatMap((category) =>
 // Number of practices in the source paper (Petrillo et al., ICSOC 2016).
 export const PAPER_PRACTICE_COUNT = 73;
 
-// Number of the paper's 73 practices that our 18 rules map to directly.
-// 13 paper practices (U-2, U-4, U-5, U-6, U-7, U-9, U-12, RM-2, E-3, E-5,
-// E-11, O-10, O-14) + 5 OpenAPI-specific rules (OPENAPI-01/02/04/05/06).
+// Number of the paper's 73 practices that our 21 rules map to directly.
+// 16 paper practices (U-2, U-4, U-5, U-6, U-7, U-9, U-12, RM-2, E-3, E-5,
+// E-11, O-10, O-14, O-8, O-13, H-2) + 5 OpenAPI-specific rules
+// (OPENAPI-01/02/04/05/06).
 // Source: paper-notes/paper-catalog.md rule→practice mapping.
-export const PAPER_PRACTICES_EVALUATED_COUNT = 13;
+export const PAPER_PRACTICES_EVALUATED_COUNT = 16;
 
 // Number of rows in this reconstructed catalog (not the paper's count).
 export const RESEARCH_CATALOG_COUNT: number = PRACTICES.length;
@@ -211,7 +216,7 @@ export const IMPLEMENTED_PRACTICES_COUNT: number = PRACTICES.filter(
 ).length;
 
 // Number of distinct rules implemented in the Analyzer Service.
-export const IMPLEMENTED_RULES_COUNT = 18;
+export const IMPLEMENTED_RULES_COUNT = 21;
 
 // Practice ID -> category name, used to label backend rule results.
 // Handles both the reconstruction P-x.y ids (used in the catalog table) and

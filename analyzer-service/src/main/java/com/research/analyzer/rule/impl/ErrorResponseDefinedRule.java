@@ -17,7 +17,7 @@ public class ErrorResponseDefinedRule implements RestApiRule {
 
     @Override
     public String getRuleName() {
-        return "Error response defined";
+        return "At least one error response documented";
     }
 
     @Override
@@ -27,7 +27,9 @@ public class ErrorResponseDefinedRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "Operations should document at least one client or server error response.";
+        return "Operations should document at least one client or server error response. "
+                + "This checks presence of a 4xx/5xx response only; it does NOT verify "
+                + "completeness of the documented error catalog.";
     }
 
     @Override

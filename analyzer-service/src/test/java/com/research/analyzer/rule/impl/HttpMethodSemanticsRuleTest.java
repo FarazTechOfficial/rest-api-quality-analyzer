@@ -38,4 +38,34 @@ class HttpMethodSemanticsRuleTest {
 
         assertFalse(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void testHeadWithRequestBodyFails() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("HEAD");
+        endpoint.setHasRequestBody(true);
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void testHeadWithoutRequestBodyPasses() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("HEAD");
+        endpoint.setHasRequestBody(false);
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void testDeleteWithRequestBodyFails() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users/1");
+        endpoint.setMethod("DELETE");
+        endpoint.setHasRequestBody(true);
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
 }

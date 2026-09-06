@@ -1,16 +1,19 @@
 package com.research.analyzer.rule;
 
 import com.research.analyzer.rule.impl.ApiVersionPresentRule;
+import com.research.analyzer.rule.impl.ContentTypeHeaderRule;
 import com.research.analyzer.rule.impl.DeleteReturns204Rule;
 import com.research.analyzer.rule.impl.ErrorResponseDefinedRule;
 import com.research.analyzer.rule.impl.Get404ForNotFoundRule;
 import com.research.analyzer.rule.impl.HttpMethodSemanticsRule;
 import com.research.analyzer.rule.impl.HttpsServerRule;
+import com.research.analyzer.rule.impl.JsonRepresentationRule;
 import com.research.analyzer.rule.impl.LowercasePathRule;
 import com.research.analyzer.rule.impl.NoFileExtensionRule;
 import com.research.analyzer.rule.impl.NoTrailingSlashRule;
 import com.research.analyzer.rule.impl.NoUnderscoreInUriRule;
 import com.research.analyzer.rule.impl.OperationIdPresentRule;
+import com.research.analyzer.rule.impl.PaginationRule;
 import com.research.analyzer.rule.impl.PathParameterInUriRule;
 import com.research.analyzer.rule.impl.PluralResourceNameRule;
 import com.research.analyzer.rule.impl.PostReturns201Rule;
@@ -60,10 +63,13 @@ class RulePracticeMappingValidationTest {
         EXPECTED_MAPPING.put("REST-016", "O-14");          // Other: SSL should be used (https server url)
         EXPECTED_MAPPING.put("REST-017", "U-7");           // URI: no version info in the URI path
         EXPECTED_MAPPING.put("REST-018", "O-10");          // Other (adapted): OAuth/security scheme defined
+        EXPECTED_MAPPING.put("REST-019", "O-8");           // Other: JSON-based representations
+        EXPECTED_MAPPING.put("REST-020", "O-13");          // Other (adapted): pagination params on collection GET
+        EXPECTED_MAPPING.put("REST-021", "H-2");           // HTTP headers: JSON Content-Type on GET responses
     }
 
     @Test
-    void allEighteenRulesAreRegisteredWithTheirRuleIds() {
+    void allRulesAreRegisteredWithTheirRuleIds() {
         List<RestApiRule> rules = buildRules();
         assertEquals(EXPECTED_MAPPING.keySet().size(), rules.size(),
                 "The rule->practice mapping test must cover every implemented rule.");
@@ -118,16 +124,19 @@ class RulePracticeMappingValidationTest {
     private List<RestApiRule> buildRules() {
         return List.of(
                 new ApiVersionPresentRule(),
+                new ContentTypeHeaderRule(),
                 new DeleteReturns204Rule(),
                 new ErrorResponseDefinedRule(),
                 new Get404ForNotFoundRule(),
                 new HttpMethodSemanticsRule(),
                 new HttpsServerRule(),
+                new JsonRepresentationRule(),
                 new LowercasePathRule(),
                 new NoFileExtensionRule(),
                 new NoTrailingSlashRule(),
                 new NoUnderscoreInUriRule(),
                 new OperationIdPresentRule(),
+                new PaginationRule(),
                 new PathParameterInUriRule(),
                 new PluralResourceNameRule(),
                 new PostReturns201Rule(),

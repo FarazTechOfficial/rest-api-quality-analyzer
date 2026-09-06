@@ -94,6 +94,10 @@ public class OpenApiParserService {
         endpoint.setSummary(operation.getSummary());
         endpoint.setDescription(operation.getDescription());
         endpoint.setHasRequestBody(operation.getRequestBody() != null);
+        if (operation.getRequestBody() != null && operation.getRequestBody().getContent() != null) {
+            endpoint.setRequestContentTypes(
+                    new ArrayList<>(operation.getRequestBody().getContent().keySet()));
+        }
 
         if (operation.getParameters() != null) {
             List<ApiParameter> parameters = new ArrayList<>();

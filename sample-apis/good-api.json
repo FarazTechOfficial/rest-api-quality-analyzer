@@ -27,8 +27,29 @@
       "get": {
         "operationId": "listUsers",
         "summary": "List all users",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer" }
+          }
+        ],
         "responses": {
-          "200": { "description": "Success" },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "type": "object" } }
+              }
+            }
+          },
           "400": { "description": "Bad request" }
         }
       },
@@ -44,7 +65,14 @@
           }
         },
         "responses": {
-          "201": { "description": "Created" },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          },
           "400": { "description": "Bad request" }
         }
       }
@@ -62,7 +90,14 @@
           }
         ],
         "responses": {
-          "200": { "description": "Success" },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object" }
+              }
+            }
+          },
           "404": { "description": "Not found" }
         }
       },

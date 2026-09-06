@@ -11,6 +11,7 @@ public class ApiEndpoint {
     private String summary;
     private String description;
     private boolean hasRequestBody;
+    private List<String> requestContentTypes = new ArrayList<>();
     private List<ApiParameter> parameters = new ArrayList<>();
     private List<ApiResponseInfo> responses = new ArrayList<>();
 
@@ -60,6 +61,14 @@ public class ApiEndpoint {
 
     public void setHasRequestBody(boolean hasRequestBody) {
         this.hasRequestBody = hasRequestBody;
+    }
+
+    public List<String> getRequestContentTypes() {
+        return requestContentTypes;
+    }
+
+    public void setRequestContentTypes(List<String> requestContentTypes) {
+        this.requestContentTypes = requestContentTypes;
     }
 
     public List<ApiParameter> getParameters() {

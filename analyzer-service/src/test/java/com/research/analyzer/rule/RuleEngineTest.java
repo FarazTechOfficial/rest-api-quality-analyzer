@@ -23,20 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class RuleEngineTest {
 
+    private static final int ENDPOINT_LEVEL_RULES = 9; // 10 rules under test minus ApiVersionPresentRule (spec-level)
+
     @Test
     void testEvaluateAllRunsAllRules() {
-        List<RestApiRule> rules = Arrays.asList(
-                new ResourceOrientedUriRule(),
-                new PluralResourceNameRule(),
-                new HttpMethodSemanticsRule(),
-                new LowercasePathRule(),
-                new OperationIdPresentRule(),
-                new ErrorResponseDefinedRule(),
-                new SuccessResponseDefinedRule(),
-                new NoTrailingSlashRule(),
-                new ApiVersionPresentRule(),
-                new PathParameterInUriRule()
-        );
+        List<RestApiRule> rules = buildRules();
 
         RuleEngine engine = new RuleEngine(rules);
 
@@ -51,8 +42,8 @@ class RuleEngineTest {
 
         List<RuleResultDto> results = engine.evaluateAll(spec);
 
-        assertEquals(10, results.size());
-        assertEquals(10, engine.getRuleCount());
+        assertEquals(ENDPOINT_LEVEL_RULES + 1, results.size());
+        assertEquals(rules.size(), engine.getRuleCount());
 
         int failures = 0;
         for (RuleResultDto result : results) {
@@ -61,5 +52,51 @@ class RuleEngineTest {
             }
         }
         assertFalse(failures == 0);
+    }
+
+    @Test
+    void specLevelRulesAreEvaluatedOncePerSpecification() {
+        List<RestApiRule> rules = buildRules();
+
+        RuleEngine engine = new RuleEngine(rules);
+
+        ApiSpecification spec = new ApiSpecification();
+        spec.setVersion("1.0.0");
+
+        ApiEndpoint first = new ApiEndpoint();
+        first.setPath("/users");
+        first.setMethod("GET");
+        spec.getEndpoints().add(first);
+
+        ApiEndpoint second = new ApiEndpoint();
+        second.setPath("/orders/{orderId}");
+        second.setMethod("GET");
+        spec.getEndpoints().add(second);
+
+        List<RuleResultDto> results = engine.evaluateAll(spec);
+
+        // 9 endpoint-level rules x 2 endpoints + 1 spec-level rule = 19.
+        assertEquals(ENDPOINT_LEVEL_RULES * 2 + 1, results.size(),
+                "Spec-level rules must not be duplicated once per endpoint.");
+
+        long apiVersionResults = results.stream()
+                .filter(r -> "REST-009".equals(r.getRuleId()))
+                .count();
+        assertEquals(1, apiVersionResults);
+    }
+
+    private List<RestApiRule> buildRules() {
+        return Arrays.asList(
+                new ResourceOrientedUriRule(),
+                new PluralResourceNameRule(),
+                new HttpMethodSemanticsRule(),
+                new LowercasePathRule(),
+                new OperationIdPresentRule(),
+                new ErrorResponseDefinedRule(),
+                new SuccessResponseDefinedRule(),
+                new NoTrailingSlashRule(),
+                new ApiVersionPresentRule(),
+                new PathParameterInUriRule()
+        );
     }
 }

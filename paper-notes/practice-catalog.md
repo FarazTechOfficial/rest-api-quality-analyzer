@@ -139,5 +139,5 @@ Reconstructed from: Kotstein & Bogner (2021) which reproduces Massé's 82 rules,
 - **Total rows in this reconstruction**: 83
 - **Flagged automatable by this reconstruction's heuristic**: 40
 - **Flagged manual review required**: 43
-- **Implemented rules**: 18 (11 map to paper-practice IDs, 7 are OpenAPI-specific; see `docs/practice-traceability.md` and `docs/research-replication.md`)
+- **Implemented rules**: 21 (16 map to paper-practice IDs, 5 are OpenAPI-specific; see `docs/practice-traceability.md` and `docs/research-replication.md`)
 - The paper itself reports **73 practices** (URI 20, Request methods 8, Error handling 16, HTTP headers 10, Others 19) and does **not** split them into automatable vs. manual — see `paper-catalog.md`.

@@ -37,7 +37,7 @@ Or with full Maven path:
 C:\tools\apache-maven-3.9.16\bin\mvn.cmd test
 ```
 
-**Expected:** `BUILD SUCCESS`, 14 tests pass (12 analyzer + 2 report).
+**Expected:** `BUILD SUCCESS`, 61 tests pass (59 analyzer + 2 report).
 
 ---
 

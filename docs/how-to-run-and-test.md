@@ -7,7 +7,7 @@
 │ Analyzer Service │ ────────────> │ Report Service   │
 │ (port 8081)     │               │ (port 8082)      │
 │ - Parses OpenAPI│               │ - Stores results  │
-│ - Runs 18 rules │               │ - H2 in-memory DB │
+│ - Runs 21 rules │               │ - H2 in-memory DB │
 │ - Returns score │               │                   │
 └─────────────────┘               └─────────────────┘
 ```
@@ -133,10 +133,10 @@ Invoke-RestMethod -Uri "http://localhost:8082/api/reports/{analysisId}/violation
 |---|------|----------------|
 | 1 | Resource-oriented URI | Verbs in URIs like /getUsers |
 | 2 | Plural resource names | Singular nouns like /user instead of /users |
-| 3 | HTTP method semantics | GET with request body, DELETE with request body |
+| 3 | HTTP method semantics | GET/HEAD/DELETE with request body |
 | 4 | Lowercase paths | Uppercase like /CreateOrder |
-| 5 | Error response defined | No 4xx/5xx documented |
-| 6 | Success response defined | No 2xx documented |
+| 5 | At least one error response documented | No 4xx/5xx documented |
+| 6 | At least one success response documented | No 2xx documented |
 | 7 | No trailing slash | Paths ending with / |
 | 8 | API version in info | Missing info.version in OpenAPI |
 | 9 | No file extension | .json, .xml in URIs |
@@ -144,9 +144,15 @@ Invoke-RestMethod -Uri "http://localhost:8082/api/reports/{analysisId}/violation
 | 11 | POST returns 201 | POST without 201 Created response |
 | 12 | DELETE returns 204 | DELETE without 204 No Content |
 | 13 | GET documents 404 | GET /{id} without 404 response |
-| 14 | HTTPS server | Server URLs using http:// |
+| 14 | HTTPS server | Absolute server URLs using http:// (relative URLs are skipped) |
 | 15 | No version in URI | /v2/orders in path |
 | 16 | Security defined | No security schemes in OpenAPI |
+| 17 | JSON representation | No request or response body declares application/json |
+| 18 | Pagination parameters | Collection GET without page/limit/offset/cursor parameters |
+| 19 | Content-Type is JSON (GET responses) | GET response documents a non-JSON media type |
+
+Rules 8, 14, 16, and 17 are API-wide: they are evaluated once per
+specification, not once per endpoint.
 
 ---
 
@@ -156,7 +162,7 @@ Invoke-RestMethod -Uri "http://localhost:8082/api/reports/{analysisId}/violation
 {
   "analysisId": "uuid-here",
   "apiName": "Pet Store API",
-  "totalRules": 90,        // 18 rules × 5 endpoints
+  "totalRules": 72,        // 17 per-endpoint rules × 4 endpoints + 4 spec-level rules (evaluated once)
   "passedRules": 80,       // PASSED status
   "failedRules": 10,       // FAILED status
   "skippedRules": 0,       // NOT_EVALUATED / MANUAL_REVIEW

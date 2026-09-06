@@ -49,4 +49,25 @@ class HttpsServerRuleTest {
 
         assertTrue(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void testRelativeServerUrlIsNotFlagged() {
+        specification.setServerUrls(List.of("/v1"));
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed(),
+                "A relative server URL declares no scheme, so transport security cannot be evaluated.");
+    }
+
+    @Test
+    void testMixedHttpsAndRelativeServerUrlsPass() {
+        specification.setServerUrls(List.of("https://api.example.com", "/v1"));
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
 }

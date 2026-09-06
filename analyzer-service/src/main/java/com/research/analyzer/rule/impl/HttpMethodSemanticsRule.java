@@ -26,7 +26,7 @@ public class HttpMethodSemanticsRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "GET and DELETE should not define a request body. POST, PUT, PATCH typically should.";
+        return "GET and HEAD should not define a request body; DELETE should not either.";
     }
 
     @Override
@@ -40,6 +40,15 @@ public class HttpMethodSemanticsRule implements RestApiRule {
                     false,
                     "GET operation defines a request body, which is uncommon and often unsupported.",
                     "Remove the request body from GET or use POST for complex queries."
+            );
+        }
+
+        if ("HEAD".equals(method) && hasBody) {
+            return new RuleResultDto(
+                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
+                    false,
+                    "HEAD operation defines a request body.",
+                    "Remove the request body from HEAD."
             );
         }
 

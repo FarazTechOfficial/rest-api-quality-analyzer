@@ -33,17 +33,18 @@
    not analyze the paper's dataset, uses a different artifact type (OpenAPI
    documents vs. cloud documentation), and automates practices the paper
    checked by hand.
-3. The project's rule engine implements **18 rules**, mapping to **13 of the
-   paper's 73 practices** (17.8 %) plus **5 OpenAPI-specific checks** that
+3. The project's rule engine implements **21 rules**, mapping to **16 of the
+   paper's 73 practices** (21.9 %) plus **5 OpenAPI-specific checks** that
    have no paper counterpart.
 4. The repository's reconstruction catalog (`paper-notes/practice-catalog.md`,
    83 rows from Kotstein & Bogner 2021 / Masse 2011) is **not** the paper's
    73-practice list; it is a separate, broader taxonomy. This file reconciles
    the two.
-5. As of the audit date, **no reproduction results exist**: `experiments/` and
-   `results/` held only placeholders. Sample-API analyses are dev fixtures,
-   not study data. Any result claimed for the paper's research questions
-   before a designed experiment is run would be **RESULTS NOT YET AVAILABLE**.
+5. As of the audit date, no reproduction results exist for the paper's
+   research questions: `experiments/` and `results/` contain only sample-API
+   fixture runs (tool self-checks, not study data; see Section 10). Any result
+   claimed for the paper's research questions before a designed experiment is
+   run would be **RESULTS NOT YET AVAILABLE**.
 
 ---
 
@@ -75,7 +76,7 @@ the paper's own results for its three manually-studied cloud APIs. They are
 | API sample | 3 cloud APIs (manual doc analysis) | Arbitrary OpenAPI specs (sample fixtures) | `DIFFERENT FROM PAPER` (intentional adaptation) |
 | Analysis unit | REST practice conformance per API | Rule result per endpoint per spec | `DIFFERENT FROM PAPER` |
 | Measurement method | Manual reading of documentation | Automated checks on OpenAPI structure | `ADAPTED` |
-| Practice catalog | 73 practices (Tables 1-6) | 83-row reconstruction + 13 paper practices automated | see Section 6 |
+| Practice catalog | 73 practices (Tables 1-6) | 83-row reconstruction + 16 paper practices automated | see Section 6 |
 | Result artifacts | Per-API practice tables | JSON analysis reports + experiment runner | `ADAPTED` |
 | Research questions | Paper's RQ1-RQ4 | Not yet answered by a designed experiment | `NOT IMPLEMENTED` (results pending) |
 
@@ -116,7 +117,7 @@ Legend: `REPRODUCED` / `ADAPTED` / `PARTIALLY REPRODUCED` / `NOT IMPLEMENTED` /
 | ID | Paper practice | Status | Rule / note |
 |----|----------------|--------|-------------|
 | RM-1 | `GET`/`POST` must not tunnel other methods | NOT IMPLEMENTED | distinct from body rules |
-| RM-2 | `GET` and `HEAD` must not have a request body | ADAPTED | REST-003 (also forbids body on DELETE) |
+| RM-2 | `GET` and `HEAD` must not have a request body | ADAPTED | REST-003 (GET/HEAD guard; also forbids body on DELETE = reconstruction P-2.7) |
 | RM-3 | `POST` must not body-encode `PUT`-like requests | NOT IMPLEMENTED | |
 | RM-4 | `GET` and `POST` must not be confused | NOT IMPLEMENTED | |
 | RM-5 | `DELETE` returns `202` for async deletion | NOT IMPLEMENTED | |
@@ -145,18 +146,25 @@ Legend: `REPRODUCED` / `ADAPTED` / `PARTIALLY REPRODUCED` / `NOT IMPLEMENTED` /
 | E-15 | `500` must not carry error bodies | NOT IMPLEMENTED | requires runtime behavior |
 | E-16 | JSON as error message format | NOT IMPLEMENTED | |
 
-### 4.4 HTTP headers (10) — all NOT IMPLEMENTED
+### 4.4 HTTP headers (10)
 
-H-1 Content-Type at the right moment · H-2 JSON Content-Type on GET · H-3
-charset in Content-Type · H-4 consistent ETag · H-5 `Location` on creation ·
-H-6 `WWW-Authenticate` · H-7 `Cache-Control` · H-8 `Expires` · H-9
-`Last-Modified` + `If-Modified-Since` · H-10 `Accept` negotiation.
+| ID | Paper practice | Status | Rule / note |
+|----|----------------|--------|-------------|
+| H-1 | `Content-Type` at the right moment (request entity body) | NOT IMPLEMENTED | requires request-body media types, not fully parsed |
+| H-2 | JSON `Content-Type` on GET responses | ADAPTED | REST-021 (declared response media-type subset) |
+| H-3 | charset in `Content-Type` | NOT IMPLEMENTED | partially checkable but not implemented |
+| H-4 | Consistent ETag mechanism | NOT IMPLEMENTED | |
+| H-5 | `Location` header on creation | NOT IMPLEMENTED | |
+| H-6 | `WWW-Authenticate` | NOT IMPLEMENTED | |
+| H-7 | `Cache-Control` | NOT IMPLEMENTED | |
+| H-8 | `Expires` | NOT IMPLEMENTED | |
+| H-9 | `Last-Modified` + `If-Modified-Since` | NOT IMPLEMENTED | |
+| H-10 | `Accept` negotiation | NOT IMPLEMENTED | |
 
-Status: `NOT IMPLEMENTED` for all ten. Several are partially expressible in
-OpenAPI (declared response headers: H-5, H-7, H-9) but are not currently
-checked; the paper does not provide sufficient information to verify exact
-header semantics from tables alone, so any future implementation should treat
-each as `ADAPTED` (H-7/H-8/H-9/H-10) or `UNCLEAR` (H-1, H-3, H-6).
+The paper does not provide sufficient information to verify exact header
+semantics from tables alone, so H-1/H-3/H-6 are best treated as `UNCLEAR` for
+any future implementation. Several are partially expressible in OpenAPI
+(declared response headers: H-5, H-7, H-9) but are not currently checked.
 
 ### 4.5 Other (19)
 
@@ -169,12 +177,12 @@ each as `ADAPTED` (H-7/H-8/H-9/H-10) or `UNCLEAR` (H-1, H-3, H-6).
 | O-5 | No over/under-specified responses | NOT IMPLEMENTED | requires runtime |
 | O-6 | Machine-readable API description | NOT IMPLEMENTED | tool requires OpenAPI as input; not a conformance check |
 | O-7 | XML representations | NOT IMPLEMENTED | |
-| O-8 | JSON representations | NOT IMPLEMENTED | |
+| O-8 | JSON representations | ADAPTED | REST-019 (any request or response body declares `application/json`) |
 | O-9 | Discoverable from root URI | NOT IMPLEMENTED | |
 | O-10 | OAuth may be used | ADAPTED | REST-018 (any declared security scheme) |
 | O-11 | Cached responses for performance | NOT IMPLEMENTED | |
 | O-12 | Correct idempotent method usage | NOT IMPLEMENTED | |
-| O-13 | Split large responses (pagination) | NOT IMPLEMENTED | |
+| O-13 | Split large responses (pagination) | ADAPTED | REST-020 (pagination params on collection GETs; cannot verify actual splitting) |
 | O-14 | SSL should be used | REPRODUCED | REST-016 (https server URL) |
 | O-15 | Self-describe caching requirements | NOT IMPLEMENTED | |
 | O-16 | Simple logical "cool" URIs | NOT IMPLEMENTED | |
@@ -182,11 +190,11 @@ each as `ADAPTED` (H-7/H-8/H-9/H-10) or `UNCLEAR` (H-1, H-3, H-6).
 | O-18 | Fully documented API | PARTIALLY REPRODUCED | documentation-presence subset via OPENAPI-04/05/06 |
 | O-19 | Fault-tolerant behavior | NOT IMPLEMENTED | requires runtime |
 
-**Coverage summary:** 13 of 73 paper practices (17.8 %) are automated by a
+**Coverage summary:** 16 of 73 paper practices (21.9 %) are automated by a
 direct rule: **9 REPRODUCED** (U-2, U-4, U-5, U-6, U-7, U-9, U-12, E-3, O-14)
-and **4 ADAPTED** (RM-2, E-5, E-11, O-10). The remaining 60 practices are
-`NOT IMPLEMENTED` (or only `PARTIALLY REPRODUCED` through overlapping rules,
-never claimed as full coverage).
+and **7 ADAPTED** (RM-2, E-5, E-11, O-10, O-8, O-13, H-2). The remaining 57
+practices are `NOT IMPLEMENTED` (or only `PARTIALLY REPRODUCED` through
+overlapping rules, never claimed as full coverage).
 
 ---
 
@@ -222,11 +230,11 @@ Each rule file: `analyzer-service/src/main/java/com/research/analyzer/rule/impl/
 |------|----------|----------------------|-----------------------------------------|--------|
 | REST-001 | U-12 | Flags CRUD-ish verbs (`get`, `create`, `delete`...) in path segments | Heuristic keyword list; may miss synonyms or over-match method names | REPRODUCED (heuristic) |
 | REST-002 | U-9 | Collection endpoints with plural-noun names | Pluralizer heuristics on English words; non-English names risk FPs | REPRODUCED (heuristic) |
-| REST-003 | RM-2 | GET/DELETE must have no `requestBody`; POST/PUT/PATCH should | DELETE-guard is an extension (paper covers GET/HEAD); OpenAPI only | ADAPTED |
+| REST-003 | RM-2 | GET/HEAD must have no `requestBody` (DELETE-body guard = P-2.7) | DELETE-guard is an extension (paper covers GET/HEAD); OpenAPI only | ADAPTED |
 | REST-004 | U-5 | Path segments in lowercase | Skips `{pathParams}`; mixed-case names flagged | REPRODUCED |
 | REST-005 | OPENAPI-01 | `operationId` present on each operation | OpenAPI-hygiene, no paper counterpart | NOT IN PAPER |
-| REST-006 | OPENAPI-04 | At least one 4xx/5xx response documented per operation | Documenting ≠ correct semantics; spec may document only some errors | NOT IN PAPER |
-| REST-007 | OPENAPI-05 | At least one 2xx response documented per operation | Same note | NOT IN PAPER |
+| REST-006 | OPENAPI-04 | At least one 4xx/5xx response documented per operation | Documenting ≠ correct semantics; presence only, not completeness of the error catalog | NOT IN PAPER |
+| REST-007 | OPENAPI-05 | At least one 2xx response documented per operation | Presence only, not status-code correctness | NOT IN PAPER |
 | REST-008 | U-2 | No trailing `/` in paths | trivial to satisfy | REPRODUCED |
 | REST-009 | OPENAPI-06 | `info.version` present | Spec metadata, no paper counterpart | NOT IN PAPER |
 | REST-010 | OPENAPI-02 | Path template params match declared `parameters` | Spec hygiene | NOT IN PAPER |
@@ -235,9 +243,16 @@ Each rule file: `analyzer-service/src/main/java/com/research/analyzer/rule/impl/
 | REST-013 | E-3 | Documented `201` for POST operations | 201 documented but body semantics unchecked | REPRODUCED (doc-level) |
 | REST-014 | E-5 | DELETE documents `204` or empty body | OpenAPI can't prove an empty body at runtime | ADAPTED |
 | REST-015 | E-11 | Item GET (`{id}`) documents `404` | Cannot detect wrong successful codes returned at runtime | ADAPTED |
-| REST-016 | O-14 | `servers[].url` uses https | Servers list may be empty/relative | REPRODUCED |
+| REST-016 | O-14 | `servers[].url` uses https | Relative server URLs (no scheme) are skipped; empty server list skipped | REPRODUCED |
 | REST-017 | U-7 | Flags `v\d+` segments in path | Query/matrix versioning not versioning-by-segment is allowed | REPRODUCED |
-| REST-018 | O-10 | Some `securitySchemes` declared | Broader than OAuth; spec may declare but never enforce | ADAPTED |
+| REST-018 | O-10 | Some `securitySchemes` declared | Broader than OAuth; spec may declare but never enforce; scheme *type* is discarded by the parser (`List<String>`) | ADAPTED |
+| REST-019 | O-8 | Any request or response body declares a JSON media type | Presence subset; cannot verify the actual serialized body at runtime | ADAPTED |
+| REST-020 | O-13 | Collection GET documents pagination params (page/limit/offset/cursor) | Heuristic: plural-noun path + query-param names; cannot verify responses are actually split | ADAPTED |
+| REST-021 | H-2 | GET responses that declare a body use `application/json` | Response-media-type subset; H-1 (request Content-Type) and H-3 (charset) not parsed | ADAPTED |
+
+Rules REST-009, REST-016, REST-018, REST-019 are **spec-level**: the engine
+evaluates them once per specification instead of once per endpoint, so
+API-wide checks do not inflate score denominators.
 
 **Cross-cutting limitation (all rules):** checks inspect OpenAPI structure, not
 runtime HTTP behavior. Every practice that the paper expresses about actual
@@ -253,15 +268,15 @@ Findings and fixes applied 2026-09-06 (`New-Project-source-code/`):
 | Claim/UI element | Before | After |
 |------------------|--------|-------|
 | Practices page hero | "The source paper reports 73 practices (35 automatable)" while listing 83 rows | Reports 73 paper practices and 83 reconstruction rows, with an explicit disclaimer that P-x.y ids are project labels |
-| Stat cards | "Automatable rows 40" presented next to paper claims | Stat cards: Paper practices (73) / Catalog rows (83) / Paper practices automated (13) / Rule checks (18) |
-| "Practices automated" (Dashboard) | 16, ambiguous ("practices automated" vs "paper practices automated") | Relabeled and derived from the corrected 13-practice mapping |
+| Stat cards | "Automatable rows 40" presented next to paper claims | Stat cards: Paper practices (73) / Catalog rows (83) / Paper practices automated (16) / Rule checks (21) |
+| "Practices automated" (Dashboard) | 16, ambiguous ("practices automated" vs "paper practices automated") | Relabeled and derived from the corrected 16-practice mapping |
 | Result categories | Backend returned reconstructed `P-x.y` practice ids | Backend now returns paper ids (`U-2`...) and `OPENAPI-*`; category labels derived from paper categories |
-| practicesCatalog.ts header | Claimed 16 rules covered paper ids (7 of 18 `OPENAPI`) | Documents 13 paper + 5 OpenAPI and the reconstruction disclaimer |
+| practicesCatalog.ts header | Claimed 13 rules covered paper ids (7 of 18 `OPENAPI`) | Documents 16 paper + 5 OpenAPI (21 rules) and the reconstruction disclaimer |
 | Charts (CategoryBars etc.) | Data-driven from rule results | Unchanged — already data-driven, no research figures hardcoded. |
 
 No fabricated research statistics were found in the frontend. All displayed
 counts now trace to either the paper catalog (73), the reconstruction (83),
-or the live rule engine (13/18).
+or the live rule engine (16/21).
 
 ---
 
@@ -269,7 +284,7 @@ or the live rule engine (13/18).
 
 `analyzer-service/src/test/java/com/research/analyzer/rule/RulePracticeMappingValidationTest.java`
 
-- Locks the exact rule->practice matrix (18 rows).
+- Locks the exact rule->practice matrix (21 rows).
 - Fails on: an unexpected rule id, practice-id drift, duplicate practice ids,
   a residual `P-` (reconstruction) id leaking into results, or a malformed
   non-`OPENAPI` paper id.
@@ -316,15 +331,15 @@ Full data: `results/summary.json`, `results/raw/*.json`,
 `results/experiment-summary.md`. The runner regenerates everything; nothing
 below is hardcoded.
 
-| API | Score | Rule-check totals (P/F/T) | Practices failed (of 18) |
+| API | Score | Rule-check totals (P/F/T) | Practices failed (of 21) |
 |-----|-------|---------------------------|--------------------------|
 | good-api | 100.0 % | 72 / 0 / 72 | none |
-| mixed-api | 83.33 % | 45 / 9 / 54 | O-10, O-14, U-12, U-5, U-9 |
-| bad-api | 62.04 % | 67 / 41 / 108 | 16 of 18 (only OPENAPI-05 and U-6 pass at practice level) |
-| my-api | 76.33 % | 316 / 98 / 414 | E-11, E-3, E-5, O-10, O-14, OPENAPI-04, U-5, U-9 |
+| mixed-api | 90.91 % | 50 / 5 / 55 | O-10, O-13, U-12, U-5, U-9 |
+| bad-api | 74.53 % | 79 / 27 / 106 | 16 of 21 (only O-8, O-14, H-2, OPENAPI-05, U-6 pass at practice level) |
+| my-api | 86.33 % | 341 / 54 / 395 | E-11, E-3, E-5, O-10, O-14, OPENAPI-04, U-5, U-9 |
 | request-body.json | **ERR** | invalid OpenAPI (missing `openapi` attribute) — recorded, not scored | — |
 
-The fixture reports exercise all 18 rules and 5 paper-derived result
+The fixture reports exercise all 21 rules and 5 paper-derived result
 categories (URI design, Request methods, Error handling, HTTP headers, Other,
 plus OpenAPI conventions). **These numbers are tool self-checks, not a
 reproduction of the paper's study.** The paper's dataset (GCP, OpenStack,
@@ -341,9 +356,9 @@ cd experiments && python run_experiment.py
 
 - **Construct validity:** the paper's practices describe documentation and
   runtime behavior; our tool approximates many from OpenAPI structure alone.
-  4 practices are `ADAPTED`, several statuses are doc-level approximations
-  (E-3/E-5/E-11). Heuristic keyword lists (REST-001/002) risk
-  false positives/negatives.
+   7 practices are `ADAPTED`, several statuses are doc-level approximations
+   (E-3/E-5/E-11). Heuristic keyword lists (REST-001/002, REST-020 pagination)
+   risk false positives/negatives.
 - **Internal validity:** no ground-truth labeling exists for the samples;
   rule outputs are not cross-validated against manual annotations.
 - **External validity:** sample fixtures are not the paper's dataset; findings
@@ -360,8 +375,10 @@ cd experiments && python run_experiment.py
 1. Build a documented corpus replicating the paper's three APIs where public
    OpenAPI/spec artifacts exist, and a manual-label protocol for the
    non-automatable practices.
-2. Add ADAPTED checks for header practices expressible in OpenAPI (H-5, H-7,
-   H-9, H-10).
+2. Add ADAPTED checks for header practices expressible in OpenAPI (H-5
+   `Location`, H-7 `Cache-Control`, H-9 `Last-Modified`, H-10 `Accept`), and
+   for H-1/H-3 request-side Content-Type once the parser captures request-body
+   media types and declared headers.
 3. Report scores per paper category and per practice for the corpus, and
    compare qualitatively (never statistically) with the paper's marks.
 4. Freeze and version the rule->practice matrix (already enforced by the
