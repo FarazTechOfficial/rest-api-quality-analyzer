@@ -47,6 +47,15 @@ class PostReturns201RuleTest {
     }
 
     @Test
+    void testPostWithoutResponsesFails() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("POST");
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
     void testGetIgnored() {
         ApiEndpoint endpoint = new ApiEndpoint();
         endpoint.setPath("/users");

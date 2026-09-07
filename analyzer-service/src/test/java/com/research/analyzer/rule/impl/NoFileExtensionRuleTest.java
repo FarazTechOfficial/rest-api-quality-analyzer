@@ -36,4 +36,44 @@ class NoFileExtensionRuleTest {
 
         assertFalse(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void nonExtensionResourcePathPasses() {
+        ApiEndpoint paramPath = new ApiEndpoint();
+        paramPath.setPath("/users/{id}");
+        paramPath.setMethod("GET");
+        ApiEndpoint numericPath = new ApiEndpoint();
+        numericPath.setPath("/reports/2024");
+        numericPath.setMethod("GET");
+
+        assertTrue(rule.evaluate(paramPath, specification).isPassed());
+        assertTrue(rule.evaluate(numericPath, specification).isPassed());
+    }
+
+    @Test
+    void annualReportExtensionFails() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/reports/annual.xml");
+        endpoint.setMethod("GET");
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void bracedParameterWithDotIsSkipped() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users/{id.json}");
+        endpoint.setMethod("GET");
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void uppercaseExtensionIsNotDetected() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users.JSON");
+        endpoint.setMethod("GET");
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
 }

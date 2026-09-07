@@ -36,4 +36,22 @@ class NoTrailingSlashRuleTest {
 
         assertFalse(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void nestedTrailingSlashFails() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users/{id}/");
+        endpoint.setMethod("GET");
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void rootPathIsAllowed() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/");
+        endpoint.setMethod("GET");
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
 }

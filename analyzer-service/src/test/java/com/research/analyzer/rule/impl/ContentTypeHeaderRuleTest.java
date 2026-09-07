@@ -85,4 +85,52 @@ class ContentTypeHeaderRuleTest {
 
         assertTrue(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void getResponseDeclaringTextPlainFails() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+        ApiResponseInfo response = new ApiResponseInfo();
+        response.setStatusCode("200");
+        response.setContentTypes(List.of("text/plain"));
+        endpoint.getResponses().add(response);
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void getResponseDeclaringJsonAndXmlPasses() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+        ApiResponseInfo response = new ApiResponseInfo();
+        response.setStatusCode("200");
+        response.setContentTypes(List.of("application/xml", "application/json"));
+        endpoint.getResponses().add(response);
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void jsonMediaTypeWithCharsetPasses() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+        ApiResponseInfo response = new ApiResponseInfo();
+        response.setStatusCode("200");
+        response.setContentTypes(List.of("application/json; charset=utf-8"));
+        endpoint.getResponses().add(response);
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void getResponseWithoutDeclaredResponsesPasses() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
 }

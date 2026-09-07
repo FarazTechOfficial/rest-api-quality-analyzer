@@ -75,4 +75,25 @@ class JsonRepresentationRuleTest {
 
         assertFalse(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void jsonMediaTypeIsCaseAndCharsetInsensitive() {
+        ApiResponseInfo response = new ApiResponseInfo();
+        response.setStatusCode("200");
+        response.setContentTypes(List.of("Application/JSON; charset=utf-8"));
+        endpoint.getResponses().add(response);
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void passesWhenAnyEndpointDeclaresJson() {
+        ApiEndpoint other = new ApiEndpoint();
+        other.setPath("/orders");
+        other.setMethod("POST");
+        other.setRequestContentTypes(List.of("application/json"));
+        specification.getEndpoints().add(other);
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
 }

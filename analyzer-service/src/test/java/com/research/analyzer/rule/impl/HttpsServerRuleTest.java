@@ -70,4 +70,24 @@ class HttpsServerRuleTest {
 
         assertTrue(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void nonHttpSchemeFails() {
+        specification.setServerUrls(List.of("ws://api.example.com"));
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void mixedSecureAndInsecureServersFail() {
+        specification.setServerUrls(List.of("https://api.example.com", "http://api.example.com"));
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users");
+        endpoint.setMethod("GET");
+
+        assertFalse(rule.evaluate(endpoint, specification).isPassed());
+    }
 }

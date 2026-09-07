@@ -47,6 +47,31 @@ class Get404ForNotFoundRuleTest {
     }
 
     @Test
+    void nestedItemGetWith404Passes() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users/{id}/posts/{postId}");
+        endpoint.setMethod("GET");
+        ApiResponseInfo response = new ApiResponseInfo();
+        response.setStatusCode("404");
+        endpoint.setResponses(List.of(response));
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
+
+    @Test
+    void concreteIdItemPathIsTreatedAsCollection() {
+        ApiEndpoint me = new ApiEndpoint();
+        me.setPath("/users/me");
+        me.setMethod("GET");
+        ApiEndpoint byId = new ApiEndpoint();
+        byId.setPath("/v2/users/12345");
+        byId.setMethod("GET");
+
+        assertTrue(rule.evaluate(me, specification).isPassed());
+        assertTrue(rule.evaluate(byId, specification).isPassed());
+    }
+
+    @Test
     void testCollectionGetIgnored() {
         ApiEndpoint endpoint = new ApiEndpoint();
         endpoint.setPath("/users");

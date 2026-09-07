@@ -36,4 +36,13 @@ class NoUnderscoreInUriRuleTest {
 
         assertFalse(rule.evaluate(endpoint, specification).isPassed());
     }
+
+    @Test
+    void bracedParameterUnderscoreIsSkipped() {
+        ApiEndpoint endpoint = new ApiEndpoint();
+        endpoint.setPath("/users/{user_id}");
+        endpoint.setMethod("GET");
+
+        assertTrue(rule.evaluate(endpoint, specification).isPassed());
+    }
 }
