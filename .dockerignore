@@ -1,0 +1,11 @@
+.git
+.gitignore
+FarazTechOfficial
+docs
+experiments
+paper-notes
+New-Project-source-code
+results
+sample-apis
+**/target
+*.log

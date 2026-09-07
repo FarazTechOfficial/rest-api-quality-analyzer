@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api/analyze",
+      "destination": "https://<ANALYZER-SERVICE-URL>/api/analyze"
+    },
+    {
+      "source": "/api/reports/:path*",
+      "destination": "https://<REPORT-SERVICE-URL>/api/reports/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "0"
+        }
+      ]
+    }
+  ]
+}
