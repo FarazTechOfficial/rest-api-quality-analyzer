@@ -1,0 +1,38 @@
+api_id,api_name,source_url,local_file,openapi_version,endpoint_count
+bitbucket-org,Bitbucket API,https://api.apis.guru/v2/specs/bitbucket.org/2.0/openapi.json,specs/bitbucket-org/openapi.json,3.0.0,303
+box-com,Box Platform API,https://api.apis.guru/v2/specs/box.com/2.0.0/openapi.json,specs/box-com/openapi.json,3.0.2,260
+datumbox-com,api.datumbox.com,https://api.apis.guru/v2/specs/datumbox.com/1.0/openapi.json,specs/datumbox-com/openapi.json,3.0.0,14
+docker-com-engine,Docker Engine API,https://api.apis.guru/v2/specs/docker.com/engine/1.33/openapi.json,specs/docker-com-engine/openapi.json,3.0.0,105
+docusign-net,DocuSign REST API,https://api.apis.guru/v2/specs/docusign.net/v2.1/openapi.json,specs/docusign-net/openapi.json,3.0.0,393
+ebay-com-commerce-charity,Charity API,https://api.apis.guru/v2/specs/ebay.com/commerce-charity/v1.2.1/openapi.json,specs/ebay-com-commerce-charity/openapi.json,3.0.0,2
+ebay-com-sell-account,Account API,https://api.apis.guru/v2/specs/ebay.com/sell-account/v1.9.0/openapi.json,specs/ebay-com-sell-account/openapi.json,3.0.0,36
+ebay-com-sell-fulfillment,Fulfillment API,https://api.apis.guru/v2/specs/ebay.com/sell-fulfillment/v1.19.19/openapi.json,specs/ebay-com-sell-fulfillment/openapi.json,3.0.0,15
+github-com,GitHub v3 REST API,https://api.apis.guru/v2/specs/github.com/1.1.4/openapi.json,specs/github-com/openapi.json,3.0.3,845
+googleapis-com-books,Books API,https://api.apis.guru/v2/specs/googleapis.com/books/v1/openapi.json,specs/googleapis-com-books/openapi.json,3.0.0,51
+googleapis-com-calendar,Calendar API,https://api.apis.guru/v2/specs/googleapis.com/calendar/v3/openapi.json,specs/googleapis-com-calendar/openapi.json,3.0.0,37
+googleapis-com-drive,Drive API,https://api.apis.guru/v2/specs/googleapis.com/drive/v3/openapi.json,specs/googleapis-com-drive/openapi.json,3.0.0,48
+googleapis-com-gmail,Gmail API,https://api.apis.guru/v2/specs/googleapis.com/gmail/v1/openapi.json,specs/googleapis-com-gmail/openapi.json,3.0.0,79
+googleapis-com-kgsearch,Knowledge Graph Search API,https://api.apis.guru/v2/specs/googleapis.com/kgsearch/v1/openapi.json,specs/googleapis-com-kgsearch/openapi.json,3.0.0,1
+googleapis-com-sheets,Google Sheets API,https://api.apis.guru/v2/specs/googleapis.com/sheets/v4/openapi.json,specs/googleapis-com-sheets/openapi.json,3.0.0,17
+googleapis-com-translate,Cloud Translation API,https://api.apis.guru/v2/specs/googleapis.com/translate/v3beta1/openapi.json,specs/googleapis-com-translate/openapi.json,3.0.0,14
+googleapis-com-vision,Cloud Vision API,https://api.apis.guru/v2/specs/googleapis.com/vision/v1p1beta1/openapi.json,specs/googleapis-com-vision/openapi.json,3.0.0,8
+googleapis-com-youtube,YouTube Data API v3,https://api.apis.guru/v2/specs/googleapis.com/youtube/v3/openapi.json,specs/googleapis-com-youtube/openapi.json,3.0.0,76
+here-com-positioning,HERE Network Positioning API v2,https://api.apis.guru/v2/specs/here.com/positioning/2.1.1/openapi.json,specs/here-com-positioning/openapi.json,3.0.0,3
+here-com-tracking,HERE Tracking,https://api.apis.guru/v2/specs/here.com/tracking/2.1.191/openapi.json,specs/here-com-tracking/openapi.json,3.0.0,216
+impala-travel-hotels,Impala Hotel Booking API,https://api.apis.guru/v2/specs/impala.travel/hotels/1.003/openapi.json,specs/impala-travel-hotels/openapi.json,3.0.0,10
+interzoid-com-getweathercity,Interzoid Get Weather City API,https://api.apis.guru/v2/specs/interzoid.com/getweathercity/1.0.0/openapi.json,specs/interzoid-com-getweathercity/openapi.json,3.0.0,1
+klarna-com-payments,Klarna Payments API V1,https://api.apis.guru/v2/specs/klarna.com/payments/1.0.0/openapi.json,specs/klarna-com-payments/openapi.json,3.0.0,6
+okta-local,Users (Okta API),https://api.apis.guru/v2/specs/okta.local/1.0.0/openapi.json,specs/okta-local/openapi.json,3.0.3,19
+openai-com,OpenAI API,https://api.apis.guru/v2/specs/openai.com/1.2.0/openapi.json,specs/openai-com/openapi.json,3.0.0,28
+salesforce-local-einstein,Einstein Vision and Einstein Language,https://api.apis.guru/v2/specs/salesforce.local/einstein/2.0.1/openapi.json,specs/salesforce-local-einstein/openapi.json,3.0.1,45
+sendgrid-com,Email Activity (beta),https://api.apis.guru/v2/specs/sendgrid.com/1.0.0/openapi.json,specs/sendgrid-com/openapi.json,3.0.0,334
+slack-com,Slack Web API,https://api.apis.guru/v2/specs/slack.com/1.7.0/openapi.json,specs/slack-com/openapi.json,3.0.0,174
+spotify-com,Spotify Web API,https://api.apis.guru/v2/specs/spotify.com/1.0.0/openapi.json,specs/spotify-com/openapi.json,3.0.3,88
+stripe-com,Stripe API,https://api.apis.guru/v2/specs/stripe.com/2022-11-15/openapi.json,specs/stripe-com/openapi.json,3.0.0,446
+svix-com,Svix API,https://api.apis.guru/v2/specs/svix.com/1.4/openapi.json,specs/svix-com/openapi.json,3.0.2,52
+telnyx-com,Telnyx API,https://api.apis.guru/v2/specs/telnyx.com/2.0.0/openapi.json,specs/telnyx-com/openapi.json,3.0.0,361
+twilio-com-api,Twilio - Api,https://api.apis.guru/v2/specs/twilio.com/api/1.42.0/openapi.json,specs/twilio-com-api/openapi.json,3.0.1,199
+twitter-com-current,Twitter API v2,https://api.apis.guru/v2/specs/twitter.com/current/2.61/openapi.json,specs/twitter-com-current/openapi.json,3.0.0,80
+visualcrossing-com-weather,Visual Crossing Weather API,https://api.apis.guru/v2/specs/visualcrossing.com/weather/4.6/openapi.json,specs/visualcrossing-com-weather/openapi.json,3.0.1,5
+xero-com-xero-accounting,Xero Accounting API,https://api.apis.guru/v2/specs/xero.com/xero_accounting/2.9.4/openapi.json,specs/xero-com-xero-accounting/openapi.json,3.0.0,224
+xero-com-xero-payroll-au,Xero Payroll AU API,https://api.apis.guru/v2/specs/xero.com/xero-payroll-au/2.9.4/openapi.json,specs/xero-com-xero-payroll-au/openapi.json,3.0.0,29

@@ -21,5 +21,8 @@ Thumbs.db
 # Logs
 *.log
 
+# Dataset
+experiments/dataset/.cache/
+
 # Build artifacts / backups
 *.zip

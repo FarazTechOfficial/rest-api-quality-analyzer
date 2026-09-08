@@ -24,9 +24,13 @@ python experiments/run_experiment.py
 
 ## Dataset status
 
-The default corpus is a **development fixture set**, not the paper's dataset.
-A replication dataset for Petrillo et al. (ICSOC 2016) — the paper's three
-APIs or a documented replacement, plus manual ground-truth labels for the
-non-automatable practices — does not yet exist. Until it does, experiment
-outputs are tool self-checks; the paper's research questions remain
-**RESULTS NOT YET AVAILABLE**.
+A **real-world dataset now exists** under [`dataset/`](dataset/README.md):
+37 distinct production API specifications collected from the APIs.guru
+openapi-directory, each verified to parse through the analyzer's own parser
+unchanged. It is the documented replacement for the **development fixture
+set** (`sample-apis/`).
+
+Ground-truth labels for the non-automatable practices do **not yet exist**, so
+experiment outputs on the real dataset are still pending. Until labels and an
+experiment run land, the paper's research questions remain **RESULTS NOT YET
+AVAILABLE**.
