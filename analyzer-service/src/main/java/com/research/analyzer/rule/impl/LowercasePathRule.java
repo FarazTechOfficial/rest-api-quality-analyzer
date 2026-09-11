@@ -39,15 +39,27 @@ public class LowercasePathRule implements RestApiRule {
                 continue;
             }
             if (!segment.equals(segment.toLowerCase())) {
-                return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                        endpoint.getPath(), endpoint.getMethod(), false,
-                        "Path segment '" + segment + "' has uppercase characters.",
-                        "Use lowercase path segments such as /order-items.");
+                RuleResultDto result = new RuleResultDto();
+                result.setRuleId(getRuleId());
+                result.setRuleName(getRuleName());
+                result.setPracticeId(getPracticeId());
+                result.setEndpoint(endpoint.getPath());
+                result.setMethod(endpoint.getMethod());
+                result.setPassed(false);
+                result.setMessage("Path segment '" + segment + "' has uppercase characters.");
+                result.setRecommendation("Use lowercase path segments such as /order-items.");
+                return result;
             }
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "Path segments use lowercase.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("Path segments use lowercase.");
+        return result;
     }
 }

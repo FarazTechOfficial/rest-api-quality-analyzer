@@ -42,14 +42,26 @@ public class SuccessResponseDefinedRule implements RestApiRule {
         }
 
         if (!hasSuccessResponse) {
-            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                    endpoint.getPath(), endpoint.getMethod(), false,
-                    "No 2xx success response is documented for this operation.",
-                    "Document a success response such as 200 or 201.");
+            RuleResultDto result = new RuleResultDto();
+            result.setRuleId(getRuleId());
+            result.setRuleName(getRuleName());
+            result.setPracticeId(getPracticeId());
+            result.setEndpoint(endpoint.getPath());
+            result.setMethod(endpoint.getMethod());
+            result.setPassed(false);
+            result.setMessage("No 2xx success response is documented for this operation.");
+            result.setRecommendation("Document a success response such as 200 or 201.");
+            return result;
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "At least one success response is documented.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("At least one success response is documented.");
+        return result;
     }
 }

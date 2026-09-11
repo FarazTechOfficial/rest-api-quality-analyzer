@@ -32,15 +32,27 @@ public class SecurityDefinedRule implements RestApiRule {
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (specification.getSecuritySchemes().isEmpty()) {
-            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                    endpoint.getPath(), endpoint.getMethod(), false,
-                    "No security schemes are defined in the API spec.",
-                    "Define at least one security scheme (e.g. OAuth2, API key, JWT Bearer).");
+            RuleResultDto result = new RuleResultDto();
+            result.setRuleId(getRuleId());
+            result.setRuleName(getRuleName());
+            result.setPracticeId(getPracticeId());
+            result.setEndpoint(endpoint.getPath());
+            result.setMethod(endpoint.getMethod());
+            result.setPassed(false);
+            result.setMessage("No security schemes are defined in the API spec.");
+            result.setRecommendation("Define at least one security scheme (e.g. OAuth2, API key, JWT Bearer).");
+            return result;
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "Security scheme(s) defined: " + String.join(", ", specification.getSecuritySchemes()), null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("Security scheme(s) defined: " + String.join(", ", specification.getSecuritySchemes()));
+        return result;
     }
 
     @Override

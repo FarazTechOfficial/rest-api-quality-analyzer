@@ -38,16 +38,28 @@ public class PathParameterInUriRule implements RestApiRule {
             if ("path".equals(param.getLocation())) {
                 String placeholder = "{" + param.getName() + "}";
                 if (!path.contains(placeholder)) {
-                    return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                            endpoint.getPath(), endpoint.getMethod(), false,
-                            "Path param '" + param.getName() + "' is declared but not found in the URI.",
-                            "Add {" + param.getName() + "} to the path template.");
+                    RuleResultDto result = new RuleResultDto();
+                    result.setRuleId(getRuleId());
+                    result.setRuleName(getRuleName());
+                    result.setPracticeId(getPracticeId());
+                    result.setEndpoint(endpoint.getPath());
+                    result.setMethod(endpoint.getMethod());
+                    result.setPassed(false);
+                    result.setMessage("Path param '" + param.getName() + "' is declared but not found in the URI.");
+                    result.setRecommendation("Add {" + param.getName() + "} to the path template.");
+                    return result;
                 }
             }
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "Path parameters match the URI template.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("Path parameters match the URI template.");
+        return result;
     }
 }

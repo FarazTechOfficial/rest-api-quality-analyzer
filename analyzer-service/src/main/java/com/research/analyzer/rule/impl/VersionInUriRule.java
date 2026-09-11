@@ -39,15 +39,27 @@ public class VersionInUriRule implements RestApiRule {
                 continue;
             }
             if (segment.matches("v\\d+") || segment.matches("v\\d+.*")) {
-                return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                        endpoint.getPath(), endpoint.getMethod(), false,
-                        "URI path contains a version segment '" + segment + "'.",
-                        "Consider versioning via Accept header or query parameter instead of the URI.");
+                RuleResultDto result = new RuleResultDto();
+                result.setRuleId(getRuleId());
+                result.setRuleName(getRuleName());
+                result.setPracticeId(getPracticeId());
+                result.setEndpoint(endpoint.getPath());
+                result.setMethod(endpoint.getMethod());
+                result.setPassed(false);
+                result.setMessage("URI path contains a version segment '" + segment + "'.");
+                result.setRecommendation("Consider versioning via Accept header or query parameter instead of the URI.");
+                return result;
             }
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "URI path does not embed a version.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("URI path does not embed a version.");
+        return result;
     }
 }

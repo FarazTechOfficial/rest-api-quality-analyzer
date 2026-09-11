@@ -35,26 +35,44 @@ public class JsonRepresentationRule implements RestApiRule {
         for (ApiEndpoint candidate : specification.getEndpoints()) {
             for (String mediaType : candidate.getRequestContentTypes()) {
                 if (isJsonMediaType(mediaType)) {
-                    return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                            endpoint.getPath(), endpoint.getMethod(), true,
-                            "The API provides JSON-based representations of its resources.", null);
+                    RuleResultDto pass = new RuleResultDto();
+                    pass.setRuleId(getRuleId());
+                    pass.setRuleName(getRuleName());
+                    pass.setPracticeId(getPracticeId());
+                    pass.setEndpoint(endpoint.getPath());
+                    pass.setMethod(endpoint.getMethod());
+                    pass.setPassed(true);
+                    pass.setMessage("The API provides JSON-based representations of its resources.");
+                    return pass;
                 }
             }
             for (ApiResponseInfo response : candidate.getResponses()) {
                 for (String mediaType : response.getContentTypes()) {
                     if (isJsonMediaType(mediaType)) {
-                        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                                endpoint.getPath(), endpoint.getMethod(), true,
-                                "The API provides JSON-based representations of its resources.", null);
+                        RuleResultDto pass = new RuleResultDto();
+                        pass.setRuleId(getRuleId());
+                        pass.setRuleName(getRuleName());
+                        pass.setPracticeId(getPracticeId());
+                        pass.setEndpoint(endpoint.getPath());
+                        pass.setMethod(endpoint.getMethod());
+                        pass.setPassed(true);
+                        pass.setMessage("The API provides JSON-based representations of its resources.");
+                        return pass;
                     }
                 }
             }
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), false,
-                "No request body or response declares a JSON media type (application/json).",
-                "Declare application/json content for request or response bodies.");
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(false);
+        result.setMessage("No request body or response declares a JSON media type (application/json).");
+        result.setRecommendation("Declare application/json content for request or response bodies.");
+        return result;
     }
 
     static boolean isJsonMediaType(String mediaType) {

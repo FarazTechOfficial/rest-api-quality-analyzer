@@ -49,16 +49,28 @@ public class ResourceOrientedUriRule implements RestApiRule {
             String cleanSegment = segment.replaceAll("[{}]", "");
             for (String verb : ACTION_VERBS) {
                 if (cleanSegment.equals(verb) || cleanSegment.startsWith(verb)) {
-                    return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                            endpoint.getPath(), endpoint.getMethod(), false,
-                            "The URI segment '" + segment + "' looks like an action-oriented name.",
-                            "Use a noun-based path such as /users instead of /getUsers.");
+                    RuleResultDto result = new RuleResultDto();
+                    result.setRuleId(getRuleId());
+                    result.setRuleName(getRuleName());
+                    result.setPracticeId(getPracticeId());
+                    result.setEndpoint(endpoint.getPath());
+                    result.setMethod(endpoint.getMethod());
+                    result.setPassed(false);
+                    result.setMessage("The URI segment '" + segment + "' looks like an action-oriented name.");
+                    result.setRecommendation("Use a noun-based path such as /users instead of /getUsers.");
+                    return result;
                 }
             }
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "URI uses resource-oriented naming.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("URI uses resource-oriented naming.");
+        return result;
     }
 }

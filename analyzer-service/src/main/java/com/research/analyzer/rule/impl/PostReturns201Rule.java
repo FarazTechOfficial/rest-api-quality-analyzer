@@ -33,9 +33,15 @@ public class PostReturns201Rule implements RestApiRule {
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (!"POST".equals(endpoint.getMethod())) {
-            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                    endpoint.getPath(), endpoint.getMethod(), true,
-                    "Rule applies only to POST operations.", null);
+            RuleResultDto result = new RuleResultDto();
+            result.setRuleId(getRuleId());
+            result.setRuleName(getRuleName());
+            result.setPracticeId(getPracticeId());
+            result.setEndpoint(endpoint.getPath());
+            result.setMethod(endpoint.getMethod());
+            result.setPassed(true);
+            result.setMessage("Rule applies only to POST operations.");
+            return result;
         }
 
         boolean has201 = false;
@@ -47,14 +53,26 @@ public class PostReturns201Rule implements RestApiRule {
         }
 
         if (!has201) {
-            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                    endpoint.getPath(), endpoint.getMethod(), false,
-                    "POST does not define a 201 Created response.",
-                    "Add a 201 Created response for resource creation operations.");
+            RuleResultDto result = new RuleResultDto();
+            result.setRuleId(getRuleId());
+            result.setRuleName(getRuleName());
+            result.setPracticeId(getPracticeId());
+            result.setEndpoint(endpoint.getPath());
+            result.setMethod(endpoint.getMethod());
+            result.setPassed(false);
+            result.setMessage("POST does not define a 201 Created response.");
+            result.setRecommendation("Add a 201 Created response for resource creation operations.");
+            return result;
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "POST defines a 201 Created response.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("POST defines a 201 Created response.");
+        return result;
     }
 }

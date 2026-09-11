@@ -34,14 +34,26 @@ public class OperationIdPresentRule implements RestApiRule {
         String operationId = endpoint.getOperationId();
 
         if (operationId == null || operationId.trim().isEmpty()) {
-            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                    endpoint.getPath(), endpoint.getMethod(), false,
-                    "Operation is missing an operationId.",
-                    "Add a unique operationId to each operation in the OpenAPI spec.");
+            RuleResultDto result = new RuleResultDto();
+            result.setRuleId(getRuleId());
+            result.setRuleName(getRuleName());
+            result.setPracticeId(getPracticeId());
+            result.setEndpoint(endpoint.getPath());
+            result.setMethod(endpoint.getMethod());
+            result.setPassed(false);
+            result.setMessage("Operation is missing an operationId.");
+            result.setRecommendation("Add a unique operationId to each operation in the OpenAPI spec.");
+            return result;
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "Operation has an operationId.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("Operation has an operationId.");
+        return result;
     }
 }

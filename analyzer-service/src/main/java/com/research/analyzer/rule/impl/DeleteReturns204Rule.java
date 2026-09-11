@@ -33,9 +33,15 @@ public class DeleteReturns204Rule implements RestApiRule {
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (!"DELETE".equals(endpoint.getMethod())) {
-            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                    endpoint.getPath(), endpoint.getMethod(), true,
-                    "Rule applies only to DELETE operations.", null);
+            RuleResultDto result = new RuleResultDto();
+            result.setRuleId(getRuleId());
+            result.setRuleName(getRuleName());
+            result.setPracticeId(getPracticeId());
+            result.setEndpoint(endpoint.getPath());
+            result.setMethod(endpoint.getMethod());
+            result.setPassed(true);
+            result.setMessage("Rule applies only to DELETE operations.");
+            return result;
         }
 
         boolean has204 = false;
@@ -47,14 +53,26 @@ public class DeleteReturns204Rule implements RestApiRule {
         }
 
         if (!has204) {
-            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                    endpoint.getPath(), endpoint.getMethod(), false,
-                    "DELETE does not define a 204 No Content response.",
-                    "Add a 204 No Content response for successful deletion.");
+            RuleResultDto result = new RuleResultDto();
+            result.setRuleId(getRuleId());
+            result.setRuleName(getRuleName());
+            result.setPracticeId(getPracticeId());
+            result.setEndpoint(endpoint.getPath());
+            result.setMethod(endpoint.getMethod());
+            result.setPassed(false);
+            result.setMessage("DELETE does not define a 204 No Content response.");
+            result.setRecommendation("Add a 204 No Content response for successful deletion.");
+            return result;
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "DELETE defines a 204 No Content response.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("DELETE defines a 204 No Content response.");
+        return result;
     }
 }

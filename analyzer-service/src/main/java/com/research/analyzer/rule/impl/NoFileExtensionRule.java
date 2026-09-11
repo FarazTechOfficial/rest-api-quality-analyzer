@@ -39,15 +39,27 @@ public class NoFileExtensionRule implements RestApiRule {
                 continue;
             }
             if (segment.matches(".*\\.(json|xml|html|csv|yaml|yml|txt|pdf|png|jpg|jpeg|gif|svg)$")) {
-                return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                        endpoint.getPath(), endpoint.getMethod(), false,
-                        "Path segment '" + segment + "' has a file extension.",
-                        "Remove the file extension and use content negotiation instead.");
+                RuleResultDto result = new RuleResultDto();
+                result.setRuleId(getRuleId());
+                result.setRuleName(getRuleName());
+                result.setPracticeId(getPracticeId());
+                result.setEndpoint(endpoint.getPath());
+                result.setMethod(endpoint.getMethod());
+                result.setPassed(false);
+                result.setMessage("Path segment '" + segment + "' has a file extension.");
+                result.setRecommendation("Remove the file extension and use content negotiation instead.");
+                return result;
             }
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "URI has no file extensions.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("URI has no file extensions.");
+        return result;
     }
 }

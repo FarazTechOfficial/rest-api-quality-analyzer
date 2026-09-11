@@ -48,17 +48,29 @@ public class PluralResourceNameRule implements RestApiRule {
 
             if (isCollection || isLastSegment) {
                 if (!isPlural(segment)) {
-                    return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                            endpoint.getPath(), endpoint.getMethod(), false,
-                            "The path segment '" + segment + "' looks singular for a collection resource.",
-                            "Use a plural noun such as /users instead of /user.");
+                    RuleResultDto result = new RuleResultDto();
+                    result.setRuleId(getRuleId());
+                    result.setRuleName(getRuleName());
+                    result.setPracticeId(getPracticeId());
+                    result.setEndpoint(endpoint.getPath());
+                    result.setMethod(endpoint.getMethod());
+                    result.setPassed(false);
+                    result.setMessage("The path segment '" + segment + "' looks singular for a collection resource.");
+                    result.setRecommendation("Use a plural noun such as /users instead of /user.");
+                    return result;
                 }
             }
         }
 
-        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
-                endpoint.getPath(), endpoint.getMethod(), true,
-                "Resource path uses plural naming where appropriate.", null);
+        RuleResultDto result = new RuleResultDto();
+        result.setRuleId(getRuleId());
+        result.setRuleName(getRuleName());
+        result.setPracticeId(getPracticeId());
+        result.setEndpoint(endpoint.getPath());
+        result.setMethod(endpoint.getMethod());
+        result.setPassed(true);
+        result.setMessage("Resource path uses plural naming where appropriate.");
+        return result;
     }
 
     private boolean isPlural(String word) {
