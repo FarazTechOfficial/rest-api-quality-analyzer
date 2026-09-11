@@ -32,39 +32,29 @@ public class HttpsServerRule implements RestApiRule {
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (specification.getServerUrls().isEmpty()) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "No server URLs defined; cannot evaluate HTTPS usage.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "No server URLs defined; nothing to check.", null);
         }
 
         for (String url : specification.getServerUrls()) {
             String lower = url.toLowerCase();
             int schemeEnd = lower.indexOf("://");
             if (schemeEnd <= 0) {
-                // Relative server URL (e.g. "/v1"): no scheme is declared, so
-                // transport security cannot be evaluated; do not flag it.
                 continue;
             }
             String scheme = lower.substring(0, schemeEnd);
             if (!"https".equals(scheme)) {
-                return new RuleResultDto(
-                        getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                        false,
+                return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                        endpoint.getPath(), endpoint.getMethod(), false,
                         "Server URL '" + url + "' does not use HTTPS.",
-                        "Use HTTPS for all server URLs to ensure transport security."
-                );
+                        "Use HTTPS for all server URLs to ensure transport security.");
             }
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "All server URLs use HTTPS.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "All server URLs use HTTPS.", null);
     }
 
     @Override

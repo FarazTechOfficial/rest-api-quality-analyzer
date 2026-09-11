@@ -27,7 +27,7 @@ public class PathParameterInUriRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "Path parameters declared in the operation should appear in the URI template.";
+        return "Path parameters should appear in the URI template.";
     }
 
     @Override
@@ -38,21 +38,16 @@ public class PathParameterInUriRule implements RestApiRule {
             if ("path".equals(param.getLocation())) {
                 String placeholder = "{" + param.getName() + "}";
                 if (!path.contains(placeholder)) {
-                    return new RuleResultDto(
-                            getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                            false,
-                            "Path parameter '" + param.getName() + "' is declared but not found in the URI.",
-                            "Add {" + param.getName() + "} to the path template."
-                    );
+                    return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                            endpoint.getPath(), endpoint.getMethod(), false,
+                            "Path param '" + param.getName() + "' is declared but not found in the URI.",
+                            "Add {" + param.getName() + "} to the path template.");
                 }
             }
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "Path parameters match the URI template.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "Path parameters match the URI template.", null);
     }
 }

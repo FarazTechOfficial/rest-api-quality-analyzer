@@ -29,31 +29,31 @@ public class ReportController {
     @PostMapping
     public ResponseEntity<Void> saveReport(@RequestBody SaveAnalysisRequest request) {
         reportService.saveAnalysis(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AnalysisReportResponse> getReport(@PathVariable String id) {
         AnalysisReportResponse report = reportService.getReport(id);
-        return ResponseEntity.ok(report);
+        return new ResponseEntity<>(report, HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<List<AnalysisSummaryDto>> listReports(
             @RequestParam(required = false) String apiName) {
         List<AnalysisSummaryDto> reports = reportService.listReports(apiName);
-        return ResponseEntity.ok(reports);
+        return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/violations")
     public ResponseEntity<AnalysisReportResponse> getViolations(@PathVariable String id) {
         AnalysisReportResponse report = reportService.getViolationsOnly(id);
-        return ResponseEntity.ok(report);
+        return new ResponseEntity<>(report, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/export")
     public ResponseEntity<AnalysisReportResponse> exportReport(@PathVariable String id) {
         AnalysisReportResponse report = reportService.getReport(id);
-        return ResponseEntity.ok(report);
+        return new ResponseEntity<>(report, HttpStatus.OK);
     }
 }

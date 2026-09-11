@@ -27,9 +27,7 @@ public class SuccessResponseDefinedRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "Operations should document at least one 2xx success response. "
-                + "This checks presence of a 2xx response only; it does NOT verify "
-                + "correctness of the success status semantics.";
+        return "Operations should document at least one 2xx success response.";
     }
 
     @Override
@@ -44,19 +42,14 @@ public class SuccessResponseDefinedRule implements RestApiRule {
         }
 
         if (!hasSuccessResponse) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
                     "No 2xx success response is documented for this operation.",
-                    "Document a success response such as 200 or 201."
-            );
+                    "Document a success response such as 200 or 201.");
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "At least one success response is documented.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "At least one success response is documented.", null);
     }
 }

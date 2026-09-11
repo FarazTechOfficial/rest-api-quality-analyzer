@@ -27,28 +27,22 @@ public class Get404ForNotFoundRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "GET operations on individual resources should document a 404 Not Found response.";
+        return "GET on a single resource should document a 404 Not Found response.";
     }
 
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (!"GET".equals(endpoint.getMethod())) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "Rule applies only to GET operations.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "Rule applies only to GET operations.", null);
         }
 
         boolean isCollection = !endpoint.getPath().matches(".*/\\{[^}]+\\}$");
         if (isCollection) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "Rule applies to individual resource GET, not collection GET.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "Rule targets individual resource GET, not collection GET.", null);
         }
 
         boolean has404 = false;
@@ -60,19 +54,14 @@ public class Get404ForNotFoundRule implements RestApiRule {
         }
 
         if (!has404) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
-                    "GET on individual resource does not document a 404 Not Found response.",
-                    "Add a 404 response to indicate the resource may not exist."
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
+                    "GET on a single resource does not document a 404 Not Found response.",
+                    "Add a 404 response to indicate the resource may not exist.");
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "GET documents 404 Not Found response.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "GET documents a 404 Not Found response.", null);
     }
 }

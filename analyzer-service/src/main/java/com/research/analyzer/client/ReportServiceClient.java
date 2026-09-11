@@ -24,7 +24,7 @@ public class ReportServiceClient {
                     .toBodilessEntity();
         } catch (RestClientException ex) {
             throw new ReportServiceException(
-                    "Failed to save analysis to Report Service. Ensure it is running on port 8082.");
+                    "Could not save the analysis to the Report Service. Make sure it is running on port 8082.");
         }
     }
 }

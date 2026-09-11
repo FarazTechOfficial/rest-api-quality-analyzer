@@ -16,12 +16,6 @@ public interface RestApiRule {
 
     RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification);
 
-    /**
-     * Whether this rule is API-level: its result depends only on the whole
-     * specification, not on a per-endpoint property. The rule engine evaluates
-     * spec-level rules exactly once per specification (not once per endpoint),
-     * otherwise their identical results would inflate score denominators.
-     */
     default boolean isSpecLevel() {
         return false;
     }

@@ -39,43 +39,32 @@ public class PluralResourceNameRule implements RestApiRule {
             if (segment.isEmpty() || segment.startsWith("{")) {
                 continue;
             }
-
-            // skip version segments like v1, v2
             if (segment.matches("v\\d+")) {
                 continue;
             }
 
-            // if next segment is a path param, this is likely a collection
             boolean isCollection = (i + 1 < segments.length && segments[i + 1].startsWith("{"));
             boolean isLastSegment = (i == segments.length - 1);
 
             if (isCollection || isLastSegment) {
                 if (!isPlural(segment)) {
-                    return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
-                    "The path segment '" + segment + "' appears to be singular for a collection resource.",
-                    "Use a plural noun such as /users instead of /user."
-                    );
+                    return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                            endpoint.getPath(), endpoint.getMethod(), false,
+                            "The path segment '" + segment + "' looks singular for a collection resource.",
+                            "Use a plural noun such as /users instead of /user.");
                 }
             }
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "Resource path uses plural naming where appropriate.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "Resource path uses plural naming where appropriate.", null);
     }
 
     private boolean isPlural(String word) {
         if (word.endsWith("s") && word.length() > 2) {
             return true;
         }
-        if (word.endsWith("ies") || word.endsWith("es")) {
-            return true;
-        }
-        return false;
+        return word.endsWith("ies") || word.endsWith("es");
     }
 }

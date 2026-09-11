@@ -4,6 +4,7 @@ import com.research.analyzer.dto.AnalysisSummaryResponse;
 import com.research.analyzer.dto.AnalyzeRequest;
 import com.research.analyzer.service.AnalysisService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,6 @@ public class AnalysisController {
     @PostMapping("/analyze")
     public ResponseEntity<AnalysisSummaryResponse> analyze(@Valid @RequestBody AnalyzeRequest request) {
         AnalysisSummaryResponse response = analysisService.analyze(request);
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

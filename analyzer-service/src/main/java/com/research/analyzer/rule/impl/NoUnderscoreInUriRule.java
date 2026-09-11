@@ -39,20 +39,15 @@ public class NoUnderscoreInUriRule implements RestApiRule {
                 continue;
             }
             if (segment.contains("_")) {
-                return new RuleResultDto(
-                        getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                        false,
-                        "Path segment '" + segment + "' contains an underscore.",
-                        "Use hyphens instead of underscores, e.g. /order-items instead of /order_items."
-                );
+                return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                        endpoint.getPath(), endpoint.getMethod(), false,
+                        "Path segment '" + segment + "' has an underscore.",
+                        "Use hyphens instead, e.g. /order-items instead of /order_items.");
             }
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "URI does not contain underscores.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "URI has no underscores.", null);
     }
 }

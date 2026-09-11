@@ -26,26 +26,21 @@ public class SecurityDefinedRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "API should define at least one security scheme for authentication/authorization.";
+        return "The API should define at least one security scheme.";
     }
 
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (specification.getSecuritySchemes().isEmpty()) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
-                    "No security schemes are defined in the API specification.",
-                    "Define at least one security scheme (e.g., OAuth2, API key, JWT Bearer)."
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
+                    "No security schemes are defined in the API spec.",
+                    "Define at least one security scheme (e.g. OAuth2, API key, JWT Bearer).");
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "Security scheme(s) are defined: " + String.join(", ", specification.getSecuritySchemes()),
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "Security scheme(s) defined: " + String.join(", ", specification.getSecuritySchemes()), null);
     }
 
     @Override

@@ -27,57 +27,41 @@ public class PaginationRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "Collection GET endpoints should document pagination parameters (page, limit, offset, cursor) "
-                + "so large responses can be split across requests (paper practice O-13).";
+        return "Collection GET endpoints should document pagination parameters.";
     }
 
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (!"GET".equals(endpoint.getMethod())) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "Not a GET operation; pagination check not applicable.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "Not a GET operation; pagination check not applicable.", null);
         }
 
         String lastSegment = lastPathSegment(endpoint.getPath());
         if (lastSegment == null || lastSegment.startsWith("{")) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "Path targets a single resource; pagination check not applicable.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "Path targets a single resource; pagination check not applicable.", null);
         }
 
         if (!isPlural(lastSegment)) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "Path does not look like a collection list endpoint; pagination check not applicable.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "Path does not look like a collection endpoint; pagination check not applicable.", null);
         }
 
         if (hasPaginationParameter(endpoint)) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "Collection GET documents pagination parameters.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "Collection GET documents pagination parameters.", null);
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                false,
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), false,
                 "Collection GET '" + endpoint.getPath() + "' does not document pagination parameters "
                         + "(e.g. page, limit, offset, cursor).",
-                "Split large responses across multiple requests by documenting pagination parameters "
-                        + "such as limit and offset (paper practice O-13)."
-        );
+                "Split large responses across requests by documenting pagination parameters like limit and offset.");
     }
 
     private String lastPathSegment(String path) {

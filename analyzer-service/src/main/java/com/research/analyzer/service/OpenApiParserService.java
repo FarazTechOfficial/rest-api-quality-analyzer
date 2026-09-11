@@ -10,6 +10,7 @@ import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.parameters.Parameter;
 import io.swagger.v3.oas.models.responses.ApiResponse;
+import io.swagger.v3.oas.models.servers.Server;
 import io.swagger.v3.parser.OpenAPIV3Parser;
 import io.swagger.v3.parser.core.models.ParseOptions;
 import io.swagger.v3.parser.core.models.SwaggerParseResult;
@@ -29,44 +30,44 @@ public class OpenApiParserService {
         SwaggerParseResult parseResult = new OpenAPIV3Parser().readContents(specificationContent, null, options);
 
         if (parseResult.getMessages() != null && !parseResult.getMessages().isEmpty()) {
-            OpenAPI openAPI = parseResult.getOpenAPI();
-            if (openAPI == null) {
+            OpenAPI api = parseResult.getOpenAPI();
+            if (api == null) {
                 throw new InvalidOpenApiException("Invalid OpenAPI specification: " + parseResult.getMessages().get(0));
             }
         }
 
-        OpenAPI openAPI = parseResult.getOpenAPI();
-        if (openAPI == null) {
+        OpenAPI api = parseResult.getOpenAPI();
+        if (api == null) {
             throw new InvalidOpenApiException("Invalid OpenAPI specification");
         }
 
         ApiSpecification spec = new ApiSpecification();
 
-        if (openAPI.getInfo() != null) {
-            spec.setTitle(openAPI.getInfo().getTitle());
-            spec.setVersion(openAPI.getInfo().getVersion());
-            spec.setDescription(openAPI.getInfo().getDescription());
+        if (api.getInfo() != null) {
+            spec.setTitle(api.getInfo().getTitle());
+            spec.setVersion(api.getInfo().getVersion());
+            spec.setDescription(api.getInfo().getDescription());
         }
 
-        if (openAPI.getServers() != null) {
-            for (io.swagger.v3.oas.models.servers.Server server : openAPI.getServers()) {
+        if (api.getServers() != null) {
+            for (Server server : api.getServers()) {
                 if (server.getUrl() != null) {
                     spec.getServerUrls().add(server.getUrl());
                 }
             }
         }
 
-        if (openAPI.getComponents() != null && openAPI.getComponents().getSecuritySchemes() != null) {
-            for (String schemeName : openAPI.getComponents().getSecuritySchemes().keySet()) {
+        if (api.getComponents() != null && api.getComponents().getSecuritySchemes() != null) {
+            for (String schemeName : api.getComponents().getSecuritySchemes().keySet()) {
                 spec.getSecuritySchemes().add(schemeName);
             }
         }
 
-        if (openAPI.getPaths() == null) {
+        if (api.getPaths() == null) {
             return spec;
         }
 
-        for (Map.Entry<String, PathItem> pathEntry : openAPI.getPaths().entrySet()) {
+        for (Map.Entry<String, PathItem> pathEntry : api.getPaths().entrySet()) {
             String path = pathEntry.getKey();
             PathItem pathItem = pathEntry.getValue();
 
@@ -95,8 +96,7 @@ public class OpenApiParserService {
         endpoint.setDescription(operation.getDescription());
         endpoint.setHasRequestBody(operation.getRequestBody() != null);
         if (operation.getRequestBody() != null && operation.getRequestBody().getContent() != null) {
-            endpoint.setRequestContentTypes(
-                    new ArrayList<>(operation.getRequestBody().getContent().keySet()));
+            endpoint.setRequestContentTypes(new ArrayList<>(operation.getRequestBody().getContent().keySet()));
         }
 
         if (operation.getParameters() != null) {
@@ -105,7 +105,7 @@ public class OpenApiParserService {
                 ApiParameter apiParam = new ApiParameter();
                 apiParam.setName(param.getName());
                 apiParam.setLocation(param.getIn());
-                apiParam.setRequired(Boolean.TRUE.equals(param.getRequired()));
+                apiParam.setRequired(param.getRequired() != null && param.getRequired());
                 apiParam.setDescription(param.getDescription());
                 parameters.add(apiParam);
             }

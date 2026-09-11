@@ -27,8 +27,7 @@ public class JsonRepresentationRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "The API should provide JSON-based representations of its resources (paper practice O-8). "
-                + "Checks that at least one declared request-body or response media type is JSON.";
+        return "The API should provide JSON-based representations of its resources.";
     }
 
     @Override
@@ -36,35 +35,26 @@ public class JsonRepresentationRule implements RestApiRule {
         for (ApiEndpoint candidate : specification.getEndpoints()) {
             for (String mediaType : candidate.getRequestContentTypes()) {
                 if (isJsonMediaType(mediaType)) {
-                    return new RuleResultDto(
-                            getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                            true,
-                            "The API provides JSON-based representations of its resources.",
-                            null
-                    );
+                    return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                            endpoint.getPath(), endpoint.getMethod(), true,
+                            "The API provides JSON-based representations of its resources.", null);
                 }
             }
             for (ApiResponseInfo response : candidate.getResponses()) {
                 for (String mediaType : response.getContentTypes()) {
                     if (isJsonMediaType(mediaType)) {
-                        return new RuleResultDto(
-                                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                                true,
-                                "The API provides JSON-based representations of its resources.",
-                                null
-                        );
+                        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                                endpoint.getPath(), endpoint.getMethod(), true,
+                                "The API provides JSON-based representations of its resources.", null);
                     }
                 }
             }
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                false,
-                "No request body or response declares a JSON media type (application/json); "
-                        + "the API does not document JSON-based representations.",
-                "Declare application/json content for request or response bodies."
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), false,
+                "No request body or response declares a JSON media type (application/json).",
+                "Declare application/json content for request or response bodies.");
     }
 
     static boolean isJsonMediaType(String mediaType) {

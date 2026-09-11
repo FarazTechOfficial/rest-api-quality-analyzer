@@ -27,9 +27,7 @@ public class ErrorResponseDefinedRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "Operations should document at least one client or server error response. "
-                + "This checks presence of a 4xx/5xx response only; it does NOT verify "
-                + "completeness of the documented error catalog.";
+        return "Operations should document at least one 4xx or 5xx error response.";
     }
 
     @Override
@@ -44,19 +42,14 @@ public class ErrorResponseDefinedRule implements RestApiRule {
         }
 
         if (!hasErrorResponse) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
                     "No 4xx or 5xx response is documented for this operation.",
-                    "Document error responses such as 400, 404, or 500."
-            );
+                    "Document error responses such as 400, 404, or 500.");
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "At least one error response is documented.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "At least one error response is documented.", null);
     }
 }

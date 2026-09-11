@@ -26,7 +26,7 @@ public class HttpMethodSemanticsRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "GET and HEAD should not define a request body; DELETE should not either.";
+        return "GET, HEAD and DELETE should not define a request body.";
     }
 
     @Override
@@ -35,37 +35,28 @@ public class HttpMethodSemanticsRule implements RestApiRule {
         boolean hasBody = endpoint.isHasRequestBody();
 
         if ("GET".equals(method) && hasBody) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
-                    "GET operation defines a request body, which is uncommon and often unsupported.",
-                    "Remove the request body from GET or use POST for complex queries."
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
+                    "GET defines a request body, which is uncommon and often unsupported.",
+                    "Remove the request body from GET or use POST for complex queries.");
         }
 
         if ("HEAD".equals(method) && hasBody) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
-                    "HEAD operation defines a request body.",
-                    "Remove the request body from HEAD."
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
+                    "HEAD defines a request body.",
+                    "Remove the request body from HEAD.");
         }
 
         if ("DELETE".equals(method) && hasBody) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
-                    "DELETE operation defines a request body, which is uncommon.",
-                    "Use path or query parameters instead of a request body for DELETE."
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
+                    "DELETE defines a request body, which is uncommon.",
+                    "Use path or query parameters instead of a request body for DELETE.");
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "HTTP method usage appears consistent.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "HTTP method usage looks correct.", null);
     }
 }

@@ -27,20 +27,15 @@ public class ContentTypeHeaderRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "For GET responses with a body, the declared Content-Type should be application/json "
-                + "(paper practice H-2). Request-side Content-Type (H-1) and charset (H-3) are not "
-                + "verifiable from the parsed OpenAPI subset.";
+        return "GET responses with a body should declare application/json as Content-Type.";
     }
 
     @Override
     public RuleResultDto evaluate(ApiEndpoint endpoint, ApiSpecification specification) {
         if (!"GET".equals(endpoint.getMethod())) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "Not a GET operation; Content-Type check not applicable (H-2 targets GET responses).",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "Not a GET operation; Content-Type check not applicable.", null);
         }
 
         boolean sawDeclaredBody = false;
@@ -65,31 +60,22 @@ public class ContentTypeHeaderRule implements RestApiRule {
                 continue;
             }
             if (concreteNonJsonType != null) {
-                return new RuleResultDto(
-                        getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                        false,
-                        "GET response documents the non-JSON media type '" + concreteNonJsonType
-                                + "'; Content-Type for GET responses with JSON bodies should be application/json.",
-                        "Declare application/json as the Content-Type for GET responses with JSON bodies (paper practice H-2)."
-                );
+                return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                        endpoint.getPath(), endpoint.getMethod(), false,
+                        "GET response declares the non-JSON media type '" + concreteNonJsonType + "'.",
+                        "Declare application/json as the Content-Type for GET responses with JSON bodies.");
             }
         }
 
         if (sawDeclaredBody) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    true,
-                    "GET response bodies declare application/json.",
-                    null
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), true,
+                    "GET response bodies declare application/json.", null);
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "No GET response declares a body Content-Type; nothing to check (H-2).",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "No GET response declares a body Content-Type; nothing to check.", null);
     }
 
     private boolean isWildcard(String mediaType) {

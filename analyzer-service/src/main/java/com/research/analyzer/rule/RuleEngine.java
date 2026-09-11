@@ -22,8 +22,6 @@ public class RuleEngine {
 
         for (RestApiRule rule : rules) {
             if (rule.isSpecLevel()) {
-                // Spec-level rules check API-wide properties; evaluate once so
-                // their identical per-endpoint results do not skew the score.
                 if (!specification.getEndpoints().isEmpty()) {
                     ApiEndpoint firstEndpoint = specification.getEndpoints().get(0);
                     allResults.add(rule.evaluate(firstEndpoint, specification));

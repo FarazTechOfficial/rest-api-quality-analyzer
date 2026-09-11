@@ -34,19 +34,14 @@ public class NoTrailingSlashRule implements RestApiRule {
         String path = endpoint.getPath();
 
         if (path.length() > 1 && path.endsWith("/")) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
                     "URI path ends with a trailing slash.",
-                    "Remove the trailing slash from the path."
-            );
+                    "Remove the trailing slash from the path.");
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "URI path does not have a trailing slash.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "URI path has no trailing slash.", null);
     }
 }

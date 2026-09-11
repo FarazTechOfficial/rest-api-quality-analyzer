@@ -34,20 +34,15 @@ public class ApiVersionPresentRule implements RestApiRule {
         String version = specification.getVersion();
 
         if (version == null || version.trim().isEmpty()) {
-            return new RuleResultDto(
-                    getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                    false,
-                    "OpenAPI info.version is missing or empty.",
-                    "Set info.version in the OpenAPI specification."
-            );
+            return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                    endpoint.getPath(), endpoint.getMethod(), false,
+                    "info.version is missing or empty.",
+                    "Set info.version in the OpenAPI spec.");
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "OpenAPI info.version is present.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "info.version is present.", null);
     }
 
     @Override

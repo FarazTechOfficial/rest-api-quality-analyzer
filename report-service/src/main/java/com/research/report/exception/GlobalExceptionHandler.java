@@ -13,13 +13,13 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(AnalysisNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleNotFound(AnalysisNotFoundException ex) {
+    public ResponseEntity<Map<String, Object>> notFoundHandler(AnalysisNotFoundException ex) {
         return buildResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneral(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
+    public ResponseEntity<Map<String, Object>> generalExceptionHandler(Exception ex) {
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Some unexpected error happened");
     }
 
     private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status, String message) {
@@ -27,6 +27,6 @@ public class GlobalExceptionHandler {
         body.put("timestamp", Instant.now().toString());
         body.put("status", status.value());
         body.put("message", message);
-        return ResponseEntity.status(status).body(body);
+        return new ResponseEntity<>(body, status);
     }
 }

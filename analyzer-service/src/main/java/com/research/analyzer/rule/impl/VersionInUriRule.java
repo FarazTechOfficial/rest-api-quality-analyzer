@@ -26,7 +26,7 @@ public class VersionInUriRule implements RestApiRule {
 
     @Override
     public String getDescription() {
-        return "API versioning should be done via headers or media type, not embedded in URI paths.";
+        return "Versioning should be done via headers or media type, not URI paths.";
     }
 
     @Override
@@ -39,20 +39,15 @@ public class VersionInUriRule implements RestApiRule {
                 continue;
             }
             if (segment.matches("v\\d+") || segment.matches("v\\d+.*")) {
-                return new RuleResultDto(
-                        getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                        false,
+                return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                        endpoint.getPath(), endpoint.getMethod(), false,
                         "URI path contains a version segment '" + segment + "'.",
-                        "Consider using API versioning via Accept header or query parameter instead of embedding in the URI."
-                );
+                        "Consider versioning via Accept header or query parameter instead of the URI.");
             }
         }
 
-        return new RuleResultDto(
-                getRuleId(), getRuleName(), getPracticeId(), endpoint.getPath(), endpoint.getMethod(),
-                true,
-                "URI path does not embed a version.",
-                null
-        );
+        return new RuleResultDto(getRuleId(), getRuleName(), getPracticeId(),
+                endpoint.getPath(), endpoint.getMethod(), true,
+                "URI path does not embed a version.", null);
     }
 }
