@@ -1,10 +1,11 @@
-package com.research.analyzer.service;
+package com.research.analyzer.servicesImpl;
 
 import com.research.analyzer.exception.InvalidOpenApiException;
 import com.research.analyzer.model.ApiEndpoint;
 import com.research.analyzer.model.ApiParameter;
 import com.research.analyzer.model.ApiResponseInfo;
 import com.research.analyzer.model.ApiSpecification;
+import com.research.analyzer.services.OpenApiParserService;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.PathItem;
@@ -21,8 +22,9 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class OpenApiParserService {
+public class OpenApiParserServiceImpl implements OpenApiParserService {
 
+    @Override
     public ApiSpecification parse(String specificationContent) {
         ParseOptions options = new ParseOptions();
         options.setResolve(true);

@@ -1,4 +1,4 @@
-package com.research.report.service;
+package com.research.report.services;
 
 import com.research.report.dto.AnalysisReportResponse;
 import com.research.report.dto.RuleResultDto;

@@ -1,9 +1,11 @@
-package com.research.analyzer.service;
+package com.research.analyzer.services;
 
 import com.research.analyzer.client.ReportServiceClient;
 import com.research.analyzer.dto.AnalysisSummaryResponse;
 import com.research.analyzer.dto.AnalyzeRequest;
 import com.research.analyzer.rule.RuleEngine;
+import com.research.analyzer.servicesImpl.AnalysisServiceImpl;
+import com.research.analyzer.servicesImpl.OpenApiParserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -24,7 +26,7 @@ class AnalysisServiceTest {
     @Mock
     private ReportServiceClient reportServiceClient;
 
-    private final OpenApiParserService parserService = new OpenApiParserService();
+    private final OpenApiParserService parserService = new OpenApiParserServiceImpl();
     private final RuleEngine ruleEngine = new RuleEngine(
             java.util.Arrays.asList(
                     new com.research.analyzer.rule.impl.ResourceOrientedUriRule(),
@@ -42,7 +44,7 @@ class AnalysisServiceTest {
 
     @Test
     void testAnalyzeGoodApi() throws IOException {
-        AnalysisService service = new AnalysisService(parserService, ruleEngine, reportServiceClient);
+        AnalysisService service = new AnalysisServiceImpl(parserService, ruleEngine, reportServiceClient);
         doNothing().when(reportServiceClient).saveAnalysis(any());
 
         AnalyzeRequest request = new AnalyzeRequest();

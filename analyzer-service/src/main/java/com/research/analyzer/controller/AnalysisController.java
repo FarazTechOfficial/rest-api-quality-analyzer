@@ -2,7 +2,7 @@ package com.research.analyzer.controller;
 
 import com.research.analyzer.dto.AnalysisSummaryResponse;
 import com.research.analyzer.dto.AnalyzeRequest;
-import com.research.analyzer.service.AnalysisService;
+import com.research.analyzer.services.AnalysisService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

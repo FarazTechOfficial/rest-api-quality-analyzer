@@ -3,7 +3,7 @@ package com.research.report.controller;
 import com.research.report.dto.AnalysisReportResponse;
 import com.research.report.dto.AnalysisSummaryDto;
 import com.research.report.dto.SaveAnalysisRequest;
-import com.research.report.service.ReportService;
+import com.research.report.services.ReportService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

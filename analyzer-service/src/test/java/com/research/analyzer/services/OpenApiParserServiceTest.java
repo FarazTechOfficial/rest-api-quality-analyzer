@@ -1,4 +1,4 @@
-package com.research.analyzer.service;
+package com.research.analyzer.services;
 
 import com.research.analyzer.model.ApiSpecification;
 import org.junit.jupiter.api.Test;
