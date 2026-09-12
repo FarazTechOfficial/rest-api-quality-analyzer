@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Cupertino-style tokens (user preference — overrides the generated default).
-   Light gray background, white cards, one blue accent, system typography.
+   Cupertino-style tokens — dark mode (Apple system color palette).
+   Near-black layered background, elevated surfaces, system typography.
 --------------------------------------------------------------------------- */
 @theme {
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
@@ -11,22 +11,27 @@
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --color-background: #f5f5f7;
-  --color-surface: #ffffff;
-  --color-foreground: #1d1d1f;
-  --color-muted: #6e6e73;
-  --color-border: #e5e5ea;
-  --color-primary: #007aff;
-  --color-primary-hover: #0062cc;
+  --color-background: #161618;
+  --color-surface: #1f1f23;
+  --color-surface-hover: #29292d;
+  --color-surface-strong: #232327;
+  --color-foreground: #f5f5f7;
+  --color-muted: #98989d;
+  --color-border: #2e2e33;
+  --color-track: #3a3a3e;
+  --color-primary: #0a84ff;
+  --color-primary-hover: #2b96ff;
   --color-on-primary: #ffffff;
-  --color-success: #34c759;
-  --color-warning: #ff9500;
-  --color-danger: #ff3b30;
-  --color-neutral: #8e8e93;
+  --color-success: #30d158;
+  --color-warning: #ff9f0a;
+  --color-danger: #ff453a;
+  --color-neutral: #98989d;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 1px rgba(0, 0, 0, 0.25);
 }
 
 /* ---------------------------------- Base --------------------------------- */
 html {
+  color-scheme: dark;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -35,6 +40,11 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
   line-height: 1.5;
+}
+
+::selection {
+  background: rgba(10, 132, 255, 0.45);
+  color: #ffffff;
 }
 
 h1,
@@ -107,7 +117,9 @@ button,
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--color-surface);
+  background: rgba(22, 22, 24, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -149,13 +161,13 @@ button,
 }
 
 .nav-link:hover {
-  background: var(--color-background);
+  background: var(--color-surface-hover);
   color: var(--color-foreground);
   text-decoration: none;
 }
 
 .nav-link.active {
-  background: rgba(0, 122, 255, 0.12);
+  background: rgba(10, 132, 255, 0.16);
   color: var(--color-primary);
 }
 
@@ -197,7 +209,7 @@ button,
 }
 
 .btn-secondary:hover {
-  background: var(--color-background);
+  background: var(--color-surface-hover);
   text-decoration: none;
 }
 
@@ -223,9 +235,9 @@ button,
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 24px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-card);
 }
 
 .card + .card {
@@ -311,7 +323,7 @@ button,
 .textarea:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(10, 132, 255, 0.22);
 }
 
 .textarea {
@@ -373,13 +385,13 @@ table.table {
   color: var(--color-muted);
   padding: 10px 14px;
   border-bottom: 1px solid var(--color-border);
-  background: #fafafc;
+  background: var(--color-surface-strong);
   white-space: nowrap;
 }
 
 .table tbody td {
   padding: 12px 14px;
-  border-bottom: 1px solid #f0f0f5;
+  border-bottom: 1px solid var(--color-surface-strong);
   vertical-align: middle;
 }
 
@@ -392,7 +404,7 @@ table.table {
 }
 
 .table tbody tr.clickable:hover {
-  background: #f7f7fa;
+  background: var(--color-surface-hover);
   cursor: pointer;
 }
 
@@ -426,27 +438,27 @@ table.table {
 }
 
 .badge-passed {
-  background: rgba(52, 199, 89, 0.12);
-  color: #1e7d3a;
+  background: rgba(48, 209, 88, 0.16);
+  color: #34c759;
 }
 
 .badge-failed {
-  background: rgba(255, 59, 48, 0.12);
-  color: #c42b23;
+  background: rgba(255, 69, 58, 0.16);
+  color: #ff453a;
 }
 
 .badge-manual_review {
-  background: rgba(255, 149, 0, 0.14);
-  color: #b26a00;
+  background: rgba(255, 159, 10, 0.16);
+  color: #ff9f0a;
 }
 
 .badge-not_evaluated {
-  background: rgba(142, 142, 147, 0.14);
-  color: #5a5a5e;
+  background: rgba(152, 152, 157, 0.16);
+  color: #a0a0a5;
 }
 
 .badge-not_applicable {
-  background: rgba(142, 142, 147, 0.1);
+  background: rgba(152, 152, 157, 0.12);
   color: #6e6e73;
 }
 
@@ -475,7 +487,7 @@ table.table {
 }
 
 .tab.active {
-  background: rgba(0, 122, 255, 0.1);
+  background: rgba(10, 132, 255, 0.16);
   border-color: var(--color-primary);
   color: var(--color-primary);
 }
@@ -517,14 +529,14 @@ table.table {
 .scorebar-track {
   height: 10px;
   border-radius: 999px;
-  background: #ececf0;
+  background: var(--color-track);
   overflow: hidden;
 }
 
 .scorebar-fill {
   height: 100%;
   border-radius: 999px;
-  background: var(--color-primary);
+  background: linear-gradient(90deg, #0a84ff, #2b96ff);
   transition: width 400ms ease-out;
 }
 
@@ -538,7 +550,7 @@ table.table {
 .chip {
   padding: 6px 12px;
   border-radius: 8px;
-  background: var(--color-background);
+  background: var(--color-surface);
   border: 1px solid var(--color-border);
   font-size: 0.8rem;
 }
@@ -581,7 +593,7 @@ table.table {
 }
 
 .gauge-track {
-  stroke: #ececf0;
+  stroke: var(--color-track);
 }
 
 .gauge-center {
@@ -670,7 +682,7 @@ table.table {
   display: flex;
   height: 12px;
   border-radius: 999px;
-  background: #f0f0f5;
+  background: var(--color-track);
   overflow: hidden;
 }
 
@@ -720,12 +732,12 @@ table.table {
   width: 60%;
   max-width: 44px;
   border-radius: 6px 6px 0 0;
-  background: var(--color-primary);
+  background: linear-gradient(180deg, #2b96ff, #0a84ff);
   transition: background-color 150ms ease-out;
 }
 
 .mbar-bar:hover {
-  background: var(--color-primary-hover);
+  background: linear-gradient(180deg, #3da0ff, #2b96ff);
 }
 
 .mbar-label {
@@ -737,9 +749,10 @@ table.table {
 .detail {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 20px 24px;
   margin-top: 20px;
+  box-shadow: var(--shadow-card);
 }
 
 .detail-head {
@@ -761,7 +774,7 @@ table.table {
   gap: 8px 16px;
   font-size: 0.875rem;
   padding: 7px 0;
-  border-bottom: 1px solid #f0f0f5;
+  border-bottom: 1px solid var(--color-surface-strong);
 }
 
 .detail-row:last-child {
@@ -785,15 +798,15 @@ table.table {
 }
 
 .alert-error {
-  background: #fff0ef;
-  border: 1px solid #ffd1cf;
-  color: #b3261e;
+  background: rgba(255, 69, 58, 0.12);
+  border: 1px solid rgba(255, 69, 58, 0.35);
+  color: #ff6961;
 }
 
 .alert-info {
-  background: #eef6ff;
-  border: 1px solid #cfe5ff;
-  color: #0a4a8f;
+  background: rgba(10, 132, 255, 0.12);
+  border: 1px solid rgba(10, 132, 255, 0.35);
+  color: #6cb4ff;
 }
 
 .empty {
