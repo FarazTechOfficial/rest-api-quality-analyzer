@@ -69,10 +69,11 @@ export default function Analyze() {
   return (
     <div className="card">
       <h1>Analyze API</h1>
-      <p className="hero-desc">
-        Provide a name and an OpenAPI specification (JSON or YAML). The analyzer checks
-        the specification against the implemented research practices.
-      </p>
+<p className="hero-desc">
+          Give your API a name and paste in an OpenAPI specification (JSON or
+          YAML). The analyzer runs the implemented design checks and shows you
+          where the API follows — or deviates from — good REST practice.
+        </p>
 
       {error && <ErrorAlert message={error} />}
 

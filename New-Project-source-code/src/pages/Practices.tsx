@@ -27,14 +27,15 @@ export default function Practices() {
       <div className="card">
         <h1>REST API Design Practices</h1>
         <p className="hero-desc">
-          The source paper — Petrillo et al., ICSOC 2016 — catalogues exactly{" "}
-          {PAPER_PRACTICE_COUNT} REST API design practices across 5 categories
-          (see paper-notes/paper-catalog.md). This page lists a broader{" "}
-          {RESEARCH_CATALOG_COUNT}-row reconstruction drawn from the reference
-          works; its P-x.y IDs are this project's labels and do not equal the
-          paper's practice IDs. The analyzer implements{" "}
-          {IMPLEMENTED_RULES_COUNT} rules, {PAPER_PRACTICES_EVALUATED_COUNT} of
-          which map directly to the paper's practices.
+          This tool is built around the design practices collected by Petrillo
+          et al. (ICSOC 2016), a study that catalogued {PAPER_PRACTICE_COUNT} REST
+          API design practices across 5 categories. The table below is a slightly
+          broader view — a {RESEARCH_CATALOG_COUNT}-practice catalog reconstructed
+          from the reference literature. The P-x.y IDs are this project's own
+          labels, not the paper's IDs, so don't try to line them up with the
+          original numbering. The analyzer implements {IMPLEMENTED_RULES_COUNT}{" "}
+          automated rule checks, and {PAPER_PRACTICES_EVALUATED_COUNT} of them map
+          directly to practices covered in the paper.
         </p>
         <div className="stats stats-four">
           <div className="card stat-card">

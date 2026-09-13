@@ -47,8 +47,9 @@ export default function Dashboard() {
       <div className="card hero-card">
         <h1>REST API Design Quality Analyzer</h1>
         <p className="hero-desc">
-          Analyze REST API specifications against research-based design practices and
-          inspect the resulting compliance report.
+          Upload an OpenAPI specification and get a compliance report that checks
+          it against established REST API design practices from the research
+          literature.
         </p>
         <div className="actions">
           <Link className="btn btn-primary" to="/analyze">

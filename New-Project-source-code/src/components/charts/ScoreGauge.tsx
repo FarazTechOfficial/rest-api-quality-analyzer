@@ -2,13 +2,6 @@ interface ScoreGaugeProps {
   score: number;
 }
 
-/** Semantic color for a score: green ≥ 80, amber ≥ 50, red below. */
-function tone(score: number): string {
-  if (score >= 80) return "var(--color-success)";
-  if (score >= 50) return "var(--color-warning)";
-  return "var(--color-danger)";
-}
-
 export default function ScoreGauge({ score }: ScoreGaugeProps) {
   const clamped = Math.max(0, Math.min(100, Math.round(score)));
   const r = 52;
@@ -34,7 +27,7 @@ export default function ScoreGauge({ score }: ScoreGaugeProps) {
             r={r}
             fill="none"
             strokeWidth="12"
-            stroke={tone(clamped)}
+            stroke="var(--color-primary)"
             strokeLinecap={clamped === 0 ? "butt" : "round"}
             strokeDasharray={`${filled} ${circumference - filled}`}
             transform="rotate(-90 70 70)"

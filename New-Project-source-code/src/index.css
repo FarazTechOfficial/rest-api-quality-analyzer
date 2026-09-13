@@ -424,6 +424,8 @@ table.table {
   gap: 6px;
   padding: 3px 10px;
   border-radius: 999px;
+  background: rgba(152, 152, 157, 0.16);
+  color: #d7d7db;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -437,29 +439,21 @@ table.table {
   background: currentColor;
 }
 
-.badge-passed {
-  background: rgba(48, 209, 88, 0.16);
-  color: #34c759;
+.badge-passed .badge-dot {
+  background: var(--color-success);
 }
 
-.badge-failed {
-  background: rgba(255, 69, 58, 0.16);
-  color: #ff453a;
+.badge-failed .badge-dot {
+  background: var(--color-danger);
 }
 
-.badge-manual_review {
-  background: rgba(255, 159, 10, 0.16);
-  color: #ff9f0a;
+.badge-manual_review .badge-dot {
+  background: var(--color-warning);
 }
 
-.badge-not_evaluated {
-  background: rgba(152, 152, 157, 0.16);
-  color: #a0a0a5;
-}
-
-.badge-not_applicable {
-  background: rgba(152, 152, 157, 0.12);
-  color: #6e6e73;
+.badge-not_evaluated .badge-dot,
+.badge-not_applicable .badge-dot {
+  background: var(--color-neutral);
 }
 
 /* --------------------------------- Tabs ----------------------------------- */
@@ -536,7 +530,7 @@ table.table {
 .scorebar-fill {
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, #0a84ff, #2b96ff);
+  background: var(--color-primary);
   transition: width 400ms ease-out;
 }
 
@@ -732,12 +726,12 @@ table.table {
   width: 60%;
   max-width: 44px;
   border-radius: 6px 6px 0 0;
-  background: linear-gradient(180deg, #2b96ff, #0a84ff);
+  background: var(--color-primary);
   transition: background-color 150ms ease-out;
 }
 
 .mbar-bar:hover {
-  background: linear-gradient(180deg, #3da0ff, #2b96ff);
+  background: var(--color-primary-hover);
 }
 
 .mbar-label {
